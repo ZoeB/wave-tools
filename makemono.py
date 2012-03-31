@@ -36,7 +36,8 @@ if (inputFile.getnchannels() != 2):
 	print('Please specify a stereo .wav file')
 	exit()
 
-for sample in range (0, inputFile.getnframes()):
+for iteration in range (0, inputFile.getnframes()):
+	sample = inputFile.readframes(1)
 	outputFile.writeframes(sample)
 
 inputFile.close()
