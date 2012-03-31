@@ -36,9 +36,11 @@ if (inputFile.getnchannels() != 2):
 	print('Please specify a stereo .wav file')
 	exit()
 
+sampleWidth = inputFile.getsampwidth()
+
 for iteration in range (0, inputFile.getnframes()):
 	datum = inputFile.readframes(1)
-	outputFile.writeframes(datum[0:2]) # This assumes the waveform is 16-bit.  It writes the first two bytes (the left channel), ignoring the last two (the right channel).
+	outputFile.writeframes(datum[:sampleWidth]) # Write the left channel; ignore the right channel.
 
 inputFile.close()
 outputFile.close()
