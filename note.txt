@@ -13,3 +13,5 @@ input02.wav
 input03.wav
 
 ...and so on.  The threshold is a number between 1 and 32767 (for 16-bit files, which is all it needs to work with), and the duration is any positive integer, for the number of samples to wait.  At least to begin with, it's fine if it only works with exactly CD quality files (16-bit, 44.1kHz) and if it only works with .wav files, not .aif.  Sensible defaults should be preset, so you can simply type "wavesplit input.wav" and it'll automate absolutely everything.
+
+Possible idea: it could automatically look at, say, the second second (as it were) of the recording, find the maximum volume of the waveform, multiply it by, say, 1.25, and use that as the threshold.
