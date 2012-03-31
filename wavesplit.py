@@ -22,7 +22,7 @@ if (inputFilename[-4:] != '.wav'):
 	exit()
 
 outputFilenamePrefix = inputFilename[:-4]
-outputFilenameNumber = 1
+outputFilenameNumber = 0
 
 try:
 	inputFile = wave.open(inputFilename, 'r')
@@ -37,23 +37,35 @@ if (inputFile.getnchannels() != 1):
 	exit()
 
 currentlyWriting = False
+samplesBeneathThreshold = 0
 
 for iteration in range(0, inputFile.getnframes()):
 	sample = inputFile.readframes(1)
 
+	sampleInteger = struct.unpack('<h', sample)
+	sampleInteger = sampleInteger[0]
+	print('Sample:', sampleInteger)
+
+	if (sampleInteger < 0):
+		sampleInteger = 0 - sampleInteger # Unipolar!
+
 	if (currentlyWriting == True):
 		# We are currently writing
-		print('test');
+		if (sampleInteger < threshold):
+			print('Dipping...')
+			samplesBeneathThreshold = samplesBeneathThreshold + 1
+
+			if (samplesBeneathThreshold >= duration):
+				print('Writing stop!')
+				currentlyWriting = false
 	else:
 		# We're not currently writing
-		sampleInteger = struct.unpack('<h', sample)
-		sampleInteger = sampleInteger[0]
-		print(sampleInteger)
-
-		if (sampleInteger < 0):
-			sampleInteger = 0 - sampleInteger # Unipolar!
-
 		if (sampleInteger >= threshold):
 			print('Writing start!')
+			currentlyWriting = True
+			samplesBeneathThreshold = 0
+			outputFilenameNumber = outputFilenameNumber + 0
+			# print('%.2d' % outputFilenameNumber)
 
-# print('%.2d' % outputFilenameNumber)
+if (currentlyWriting == True):
+	print('Writing stop!')
