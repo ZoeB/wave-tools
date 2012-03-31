@@ -1,0 +1,1 @@
+This should be a simple program that takes a stereo .wav file as input, and outputs only the left channel as a new file.
