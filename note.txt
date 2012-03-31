@@ -1,0 +1,15 @@
+So, the idea I've just had is to make a program that takes a single .wav or .aif file as input, and automatically splits it up into several .wav or .aif files as output.  Once the waveform's volume goes above a certain (command line specifyable) threshold in either polarity, a new output waveform is started and written to, and once it stays under that threshold for a certain (also command line specifyable) duration, that new output waveform is closed.  So you can give it a waveform that's a bunch of single hit samples, and it will automatically split them out into one waveform file per hit.  That way, I won't have to do it by hand in Cool Edit, and it doesn't have any of the BPM second guessing in ReCycle, which doesn't apply to a bunch of unrelated single hit samples.
+
+It would also be a simple enough program to learn a bit more Python with.
+
+Example usage:
+
+wavesplit input.wav -threshold 64 -duration 128
+
+Output would be:
+
+input01.wav
+input02.wav
+input03.wav
+
+...and so on.  The threshold is a number between 1 and 32767 (for 16-bit files, which is all it needs to work with), and the duration is any positive integer, for the number of samples to wait.  At least to begin with, it's fine if it only works with exactly CD quality files (16-bit, 44.1kHz) and if it only works with .wav files, not .aif.  Sensible defaults should be preset, so you can simply type "wavesplit input.wav" and it'll automate absolutely everything.
