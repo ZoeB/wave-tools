@@ -16,7 +16,7 @@ if (inputFilename[-4:] != '.wav'):
 	exit()
 
 try:
-	inputFile = wave.open(inputFilename, r)
+	inputFile = wave.open(inputFilename, 'r')
 except:
 	print('Please specify a valid .wav file')
 	exit()
