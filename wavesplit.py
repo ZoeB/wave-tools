@@ -1,4 +1,4 @@
-# Wavesplit version 0, for Python 3.  By ZoëB, 2012-03-31 - 2012-03-31.
+# Wavesplit version 1, for Python 3.  By ZoëB, 2012-03-31.
 
 # This splits up a mono .wav file into several smaller .wav files,
 # one per sound, leaving out the gaps.
@@ -10,6 +10,7 @@ import wave # For .wav input and output
 # Make sure the user has specified exactly three arguments...
 if (len(sys.argv) != 4):
 	print('Please specify a threshold, duration, and single .wav file')
+	print('For example: python3 wavesplit.py 1000 1000 input.wav')
 	exit()
 
 # ...and that the last argument is a .wav file.
