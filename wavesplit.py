@@ -44,20 +44,20 @@ for iteration in range(0, inputFile.getnframes()):
 
 	sampleInteger = struct.unpack('<h', sample)
 	sampleInteger = sampleInteger[0]
-	print('Sample:', sampleInteger)
 
 	if (sampleInteger < 0):
 		sampleInteger = 0 - sampleInteger # Unipolar!
 
 	if (currentlyWriting == True):
 		# We are currently writing
+		outputFile.writeframes(sample)
+
 		if (sampleInteger < threshold):
 			samplesBeneathThreshold = samplesBeneathThreshold + 1
-			print('Dipping for', samplesBeneathThreshold, 'samples')
 
 			if (samplesBeneathThreshold >= duration):
 				currentlyWriting = False
-				print('Writing stop!')
+				outputFile.close()
 		else:
 			samplesBeneathThreshold = 0
 	else:
@@ -68,7 +68,12 @@ for iteration in range(0, inputFile.getnframes()):
 			outputFilenameNumber = outputFilenameNumber + 1
 			outputFilename = str(outputFilenameNumber)
 			outputFilename = outputFilename.zfill(2) # Pad to 2 digits
-			print('Writing', outputFilename, 'start!')
+			outputFilename = outputFilenamePrefix + '-' + outputFilename + '.wav'
+			print('Writing to', outputFilename)
+			outputFile = wave.open(outputFilename, 'w')
+			outputFile.setnchannels(inputFile.getnchannels())
+			outputFile.setsampwidth(inputFile.getsampwidth())
+			outputFile.setframerate(inputFile.getframerate())
 
 if (currentlyWriting == True):
-	print('Writing stop!')
+	outputFile.close()
