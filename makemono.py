@@ -38,7 +38,10 @@ if (inputFile.getnchannels() != 2):
 
 for iteration in range (0, inputFile.getnframes()):
 	datum = inputFile.readframes(1)
-	outputFile.writeframes(datum[0:1]) # This assumes the datum consists of two actual samples, both 16-bit.  The first 16-bit sample (parts 0 and 1) is output; the second 16-bit sample (parts 2 and 3) isn't.  The first sample is the left channel, the second the right channel.
+	outputFile.writeframes(datum[0:2]) # This assumes the datum consists of two actual samples, both 16-bit.  The first 16-bit sample (parts 0 and 1) is output; the second 16-bit sample (parts 2 and 3) isn't.  The first sample is the left channel, the second the right channel.
 
 inputFile.close()
 outputFile.close()
+
+print('Waveform converted to mono')
+exit()
