@@ -1,4 +1,4 @@
-# Makemono, for Python 3.  By ZoëB, 2012-03-31 - 2012-03-31.
+# Makemono version 1, for Python 3.  By ZoëB, 2012-03-31.
 
 # This converts a stereo .wav file to mono.
 # It's useful if, for instance, you've recorded a synthesiser using a
@@ -13,7 +13,7 @@ if (len(sys.argv) != 2):
 	print('Please specify a single .wav file')
 	exit()
 
-# ...and that argument is a .wav file.
+# ...and that the argument is a .wav file.
 inputFilename = sys.argv[1]
 
 if (inputFilename[-4:] != '.wav'):
