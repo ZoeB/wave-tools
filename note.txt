@@ -1,1 +1,3 @@
 This should be a simple program that takes a stereo .wav file as input, and outputs only the left channel as a new file.
+
+It should have the option of choosing the channel to keep: left, right or the average of both.  Right should be simple enough: presumably "sampleWidth:" instead of ":sampleWidth".
