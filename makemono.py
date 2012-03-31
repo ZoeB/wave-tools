@@ -20,7 +20,7 @@ if (inputFilename[-4:] != '.wav'):
 	print('Please specify a .wav file')
 	exit()
 
-outputFilename = inputFilename[:-4] + '-mono' + '.wav';
+outputFilename = inputFilename[:-4] + '-mono' + '.wav'
 
 try:
 	inputFile = wave.open(inputFilename, 'r')
