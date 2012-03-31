@@ -52,20 +52,23 @@ for iteration in range(0, inputFile.getnframes()):
 	if (currentlyWriting == True):
 		# We are currently writing
 		if (sampleInteger < threshold):
-			print('Dipping...')
 			samplesBeneathThreshold = samplesBeneathThreshold + 1
+			print('Dipping for', samplesBeneathThreshold, 'samples')
 
 			if (samplesBeneathThreshold >= duration):
+				currentlyWriting = False
 				print('Writing stop!')
-				currentlyWriting = false
+		else:
+			samplesBeneathThreshold = 0
 	else:
 		# We're not currently writing
 		if (sampleInteger >= threshold):
-			print('Writing start!')
 			currentlyWriting = True
 			samplesBeneathThreshold = 0
-			outputFilenameNumber = outputFilenameNumber + 0
-			# print('%.2d' % outputFilenameNumber)
+			outputFilenameNumber = outputFilenameNumber + 1
+			outputFilename = str(outputFilenameNumber)
+			outputFilename = outputFilename.zfill(2) # Pad to 2 digits
+			print('Writing', outputFilename, 'start!')
 
 if (currentlyWriting == True):
 	print('Writing stop!')
