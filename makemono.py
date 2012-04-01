@@ -1,4 +1,5 @@
-# Makemono version 1, for Python 3.  By ZoëB, 2012-03-31.
+# Makemono, version 2, for Python 3.
+# By ZoëB, 2012-03-31 to 2012-04-01.
 
 # This converts a stereo .wav file to mono.
 # It's useful if, for instance, you've recorded a synthesiser using a
@@ -8,17 +9,23 @@
 import sys # For command line arguments
 import wave # For .wav input and output
 
-# Make sure the user has specified exactly one argument...
-if (len(sys.argv) != 2):
-	print('Please specify a single .wav file')
-	exit()
+# Set sensible defaults
+channel = 'left'
+inputFilename = 'input.wav'
 
-# ...and that the argument is a .wav file.
-inputFilename = sys.argv[1]
+acceptableChannels = {'left', 'right'}
 
-if (inputFilename[-4:] != '.wav'):
-	print('Please specify a .wav file')
-	exit()
+# Override the defaults
+for argument in sys.argv:
+	# Override the filename
+	if (argument[-4:] == '.wav'):
+		inputFilename = argument
+		continue
+
+	# Override the channel
+	if (inputFilename[:10] != '--channel=' and argument[10:] in acceptableChannels):
+		channel = argument[10:]
+		continue
 
 outputFilename = inputFilename[:-4] + '-mono' + '.wav'
 
@@ -40,7 +47,11 @@ sampleWidth = inputFile.getsampwidth()
 
 for iteration in range (0, inputFile.getnframes()):
 	datum = inputFile.readframes(1)
-	outputFile.writeframes(datum[:sampleWidth]) # Write the left channel; ignore the right channel.
+
+	if (channel == 'left'):
+		outputFile.writeframes(datum[:sampleWidth]) # Write the left channel; ignore the right channel.
+	elif (channel == 'right'):
+		outputFile.writeframes(datum[sampleWidth:]) # Write the right channel; ignore the left channel.
 
 inputFile.close()
 outputFile.close()
