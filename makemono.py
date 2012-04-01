@@ -34,7 +34,7 @@ python3 makemono.py [option...] input.wav
 
 Options: (may appear before or after arguments)
 	--channel=foo
-		set which channel to preserve (default is left, other option is right)
+		set which channel to extract (default is left, other option is right)
 	""")
 	exit()
 
@@ -56,6 +56,11 @@ if (inputFile.getnchannels() != 2):
 
 sampleWidth = inputFile.getsampwidth()
 
+if (channel == 'left'):
+	print('Extracting left channel of', inputFilename, 'into', outputFilename)
+elif (channel == 'right'):
+	print('Extracting right channel of', inputFilename, 'into', outputFilename)
+
 for iteration in range (0, inputFile.getnframes()):
 	datum = inputFile.readframes(1)
 
@@ -67,5 +72,5 @@ for iteration in range (0, inputFile.getnframes()):
 inputFile.close()
 outputFile.close()
 
-print('Waveform converted to mono')
+print('Extraction complete')
 exit()
