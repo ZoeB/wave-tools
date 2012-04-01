@@ -22,9 +22,13 @@ for argument in sys.argv:
 		continue
 
 	# Override the channel
-	if (argument[:10] == '--channel=' and argument[10:] in acceptableChannels):
-		channel = argument[10:]
-		continue
+	if (argument[:10] == '--channel='):
+		if (argument[10:] in acceptableChannels):
+			channel = argument[10:]
+			continue
+		else:
+			print(argument[10:], "ain't any channel I ever heard of")
+			exit()
 
 if (inputFilename == ''):
 	print("""\
