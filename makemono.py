@@ -12,7 +12,7 @@ import wave # For .wav input and output
 channel = 'left'
 inputFilename = ''
 
-acceptableChannels = {'left', 'right'}
+acceptableChannels = ['left', 'right']
 
 # Override the defaults
 for argument in sys.argv:
