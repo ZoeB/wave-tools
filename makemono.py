@@ -11,7 +11,7 @@ import wave # For .wav input and output
 
 # Set sensible defaults
 channel = 'left'
-inputFilename = 'input.wav'
+inputFilename = ''
 
 acceptableChannels = {'left', 'right'}
 
@@ -26,6 +26,17 @@ for argument in sys.argv:
 	if (inputFilename[:10] != '--channel=' and argument[10:] in acceptableChannels):
 		channel = argument[10:]
 		continue
+
+if (inputFilename == ''):
+	print("""\
+Usage:
+python3 makemono.py [option...] input.wav
+
+Options: (may appear before or after arguments)
+	--channel=foo
+		set which channel to preserve (default is left, other option is right)
+	""")
+	exit()
 
 outputFilename = inputFilename[:-4] + '-mono' + '.wav'
 
