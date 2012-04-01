@@ -4,7 +4,6 @@
 # This converts a stereo .wav file to mono.
 # It's useful if, for instance, you've recorded a synthesiser using a
 # stereo only sound recorder.
-# It works by simply disregarding the right channel entirely.
 
 import sys # For command line arguments
 import wave # For .wav input and output
@@ -23,7 +22,7 @@ for argument in sys.argv:
 		continue
 
 	# Override the channel
-	if (inputFilename[:10] != '--channel=' and argument[10:] in acceptableChannels):
+	if (argument[:10] == '--channel=' and argument[10:] in acceptableChannels):
 		channel = argument[10:]
 		continue
 
