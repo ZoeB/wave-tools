@@ -1,4 +1,5 @@
-# Wavesplit version 1, for Python 3.  By ZoëB, 2012-03-31.
+# Wavesplit, version 2, for Python 3.
+# By ZoëB, 2012-03-31 to 2012-04-01.
 
 # This splits up a mono .wav file into several smaller .wav files,
 # one per sound, leaving out the gaps.
@@ -7,19 +8,45 @@ import struct # For converting the (two's complement?) binary data to integers
 import sys # For command line arguments
 import wave # For .wav input and output
 
-# Make sure the user has specified exactly three arguments...
-if (len(sys.argv) != 4):
-	print('Please specify a threshold, duration, and single .wav file')
-	print('For example: python3 wavesplit.py 1000 1000 input.wav')
-	exit()
+# Set sensible defaults
+threshold = 1024 # This has to be a number between 1 and 32767
+duration = 11025 # Measured in single samples
+inputFilename = ''
 
-# ...and that the last argument is a .wav file.
-threshold = int(sys.argv[1])
-duration = int(sys.argv[2])
-inputFilename = sys.argv[3]
+# Override the defaults
+for argument in sys.argv:
+	# Override the filename
+	if (argument[-4:] == '.wav'):
+		inputFilename = argument
+		continue
 
-if (inputFilename[-4:] != '.wav'):
-	print('Please specify a .wav file')
+	# Override the threshold
+	if (argument[:12] == '--threshold='):
+		argument = int(argument[12:])
+
+		if (argument > 0 and argument < 32768):
+			threshold = argument
+			continue
+		else:
+			print('The threshold must be an integer between 1 and 32767')
+			exit()
+
+	# Override the duration
+	if (argument[:11] == '--duration='):
+		argument = int(argument[11:])
+
+		if (argument > 0):
+			duration = argument
+			continue
+		else:
+			print('The duration must be a positive integer')
+			exit()
+
+if (inputFilename == ''):
+	print("""\
+Usage:
+python3 wavesplit.py [option...] input.wav
+	""")
 	exit()
 
 outputFilenamePrefix = inputFilename[:-4]
