@@ -46,6 +46,12 @@ if (inputFilename == ''):
 	print("""\
 Usage:
 python3 wavesplit.py [option...] input.wav
+
+Options: (may appear before or after arguments)
+	--threshold=foo
+		set the cutoff point between signal and noise (default is 1024, any number between 1 and 32767 is valid)
+	--duration=foo
+		require this many consecutive samples below the cutoff point in order to close the output file (default is 11025, a quarter of a second at CD quality)
 	""")
 	exit()
 
