@@ -1,7 +1,7 @@
-# Wavesplit, version 2, for Python 3.
-# By ZoëB, 2012-03-31 to 2012-04-01.
+# Wavesplit, version 3, for Python 3.
+# By ZoëB, 2012-03-31 to 2012-04-03.
 
-# This splits up a mono .wav file into several smaller .wav files,
+# This splits up a .wav file into several smaller .wav files,
 # one per sound, leaving out the gaps.
 
 import struct # For converting the (two's complement?) binary data to integers
@@ -60,54 +60,54 @@ outputFilenameNumber = 0
 
 try:
 	inputFile = wave.open(inputFilename, 'r')
-	samplewidth = inputFile.getsampwidth()
 	framerate = inputFile.getframerate()
+	numberOfChannels = inputFile.getnchannels()
+	sampleWidth = inputFile.getsampwidth()
 except:
 	print('Please specify a valid .wav file')
-	exit()
-
-if (inputFile.getnchannels() != 1):
-	print('Please specify a mono .wav file') # It should be trivial to support stereo files too, but let's not get ahead of ourselves here.
 	exit()
 
 currentlyWriting = False
 samplesBeneathThreshold = 0
 
 for iteration in range(0, inputFile.getnframes()):
-	sample = inputFile.readframes(1)
+	allChannelsAsBinary = inputFile.readframes(1)
 
-	sampleInteger = struct.unpack('<h', sample)
-	sampleInteger = sampleInteger[0]
+	for channelNumber in range (1, numberOfChannels):
+		channelStart = (channelNumber - 1) * sampleWidth
+		channelEnd = channelNumber * sampleWidth
+		sampleInteger = struct.unpack('<h', allChannelsAsBinary[channelStart:channelEnd])
+		sampleInteger = sampleInteger[0]
 
-	if (sampleInteger < 0):
-		sampleInteger = 0 - sampleInteger # Unipolar!
+		if (sampleInteger < 0):
+			sampleInteger = 0 - sampleInteger # Unipolar!
 
-	if (currentlyWriting == True):
-		# We are currently writing
-		outputFile.writeframes(sample)
+		if (currentlyWriting == True):
+			# We are currently writing
+			outputFile.writeframes(sample)
 
-		if (sampleInteger < threshold):
-			samplesBeneathThreshold = samplesBeneathThreshold + 1
+			if (sampleInteger < threshold):
+				samplesBeneathThreshold = samplesBeneathThreshold + 1
 
-			if (samplesBeneathThreshold >= duration):
-				currentlyWriting = False
-				outputFile.close()
+				if (samplesBeneathThreshold >= duration):
+					currentlyWriting = False
+					outputFile.close()
+			else:
+				samplesBeneathThreshold = 0
 		else:
-			samplesBeneathThreshold = 0
-	else:
-		# We're not currently writing
-		if (sampleInteger >= threshold):
-			currentlyWriting = True
-			samplesBeneathThreshold = 0
-			outputFilenameNumber = outputFilenameNumber + 1
-			outputFilename = str(outputFilenameNumber)
-			outputFilename = outputFilename.zfill(2) # Pad to 2 digits
-			outputFilename = outputFilenamePrefix + '-' + outputFilename + '.wav'
-			print('Writing to', outputFilename)
-			outputFile = wave.open(outputFilename, 'w')
-			outputFile.setnchannels(inputFile.getnchannels())
-			outputFile.setsampwidth(inputFile.getsampwidth())
-			outputFile.setframerate(inputFile.getframerate())
+			# We're not currently writing
+			if (sampleInteger >= threshold):
+				currentlyWriting = True
+				samplesBeneathThreshold = 0
+				outputFilenameNumber = outputFilenameNumber + 1
+				outputFilename = str(outputFilenameNumber)
+				outputFilename = outputFilename.zfill(2) # Pad to 2 digits
+				outputFilename = outputFilenamePrefix + '-' + outputFilename + '.wav'
+				print('Writing to', outputFilename)
+				outputFile = wave.open(outputFilename, 'w')
+				outputFile.setnchannels(inputFile.getnchannels())
+				outputFile.setsampwidth(inputFile.getsampwidth())
+				outputFile.setframerate(inputFile.getframerate())
 
 if (currentlyWriting == True):
 	outputFile.close()
