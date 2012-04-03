@@ -1,1 +1,0 @@
-It should have the option of choosing the average of both channels.

@@ -5,14 +5,15 @@
 # It's useful if, for instance, you've recorded a synthesiser using a
 # stereo only sound recorder.
 
+import struct # For converting the (two's complement?) binary data to integers
 import sys # For command line arguments
 import wave # For .wav input and output
 
 # Set sensible defaults
-channel = 'left'
+channel = 'both'
 inputFilename = ''
 
-acceptableChannels = ['left', 'right']
+acceptableChannels = ['both', 'left', 'right']
 
 # Override the defaults
 for argument in sys.argv:
@@ -37,7 +38,7 @@ python3 makemono.py [option...] input.wav
 
 Options: (may appear before or after arguments)
 	--channel=foo
-		set which channel to extract (default is left, other option is right)
+		set which channel to extract (default is both, other options are left and right)
 	""")
 	exit()
 
@@ -59,7 +60,9 @@ if (inputFile.getnchannels() != 2):
 
 sampleWidth = inputFile.getsampwidth()
 
-if (channel == 'left'):
+if (channel == 'both'):
+	print('Extracting both channels of', inputFilename, 'into', outputFilename)
+elif (channel == 'left'):
 	print('Extracting left channel of', inputFilename, 'into', outputFilename)
 elif (channel == 'right'):
 	print('Extracting right channel of', inputFilename, 'into', outputFilename)
@@ -67,7 +70,16 @@ elif (channel == 'right'):
 for iteration in range (0, inputFile.getnframes()):
 	datum = inputFile.readframes(1)
 
-	if (channel == 'left'):
+	if (channel == 'both'):
+		leftChannelAsInteger = struct.unpack('<h', datum[:sampleWidth])
+		leftChannelAsInteger = leftChannelAsInteger[0]
+		rightChannelAsInteger = struct.unpack('<h', datum[sampleWidth:])
+		rightChannelAsInteger = rightChannelAsInteger[0]
+		combinationAsInteger = (leftChannelAsInteger + rightChannelAsInteger) / 2
+		combinationAsInteger = int(combinationAsInteger)
+		combinationAsBinary = struct.pack('<h', combinationAsInteger)
+		outputFile.writeframes(combinationAsBinary)
+	elif (channel == 'left'):
 		outputFile.writeframes(datum[:sampleWidth]) # Write the left channel; ignore the right channel.
 	elif (channel == 'right'):
 		outputFile.writeframes(datum[sampleWidth:]) # Write the right channel; ignore the left channel.
