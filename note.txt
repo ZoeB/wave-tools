@@ -19,3 +19,5 @@ Possible idea: it could automatically look at, say, the second second (as it wer
 It should really work with stereo files, or for that matter files with arbitrary channels.  This shouldn't be difficult to implement.
 
 Another good feature would be an optional boolean command line argument to tell it to politely wait until the next zero value before closing each output wave file.
+
+Note that this currently only works with 16-bit wave files.  Changing "<h" to other values may allow 8 or 24-bit ones, but I'm not sure how to implement this yet.

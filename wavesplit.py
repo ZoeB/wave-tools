@@ -68,46 +68,54 @@ except:
 	exit()
 
 currentlyWriting = False
-samplesBeneathThreshold = 0
+allChannelsBeneathThreshold = 0
 
 for iteration in range(0, inputFile.getnframes()):
 	allChannelsAsBinary = inputFile.readframes(1)
+	allChannelsAsIntegers = []
+	allChannelsCurrentlyBeneathThreshold = True
 
-	for channelNumber in range (1, numberOfChannels):
+	for channelNumber in range (numberOfChannels):
+		channelNumber = channelNumber + 1
 		channelStart = (channelNumber - 1) * sampleWidth
 		channelEnd = channelNumber * sampleWidth
-		sampleInteger = struct.unpack('<h', allChannelsAsBinary[channelStart:channelEnd])
-		sampleInteger = sampleInteger[0]
+		channelAsInteger = struct.unpack('<h', allChannelsAsBinary[channelStart:channelEnd])
+		channelAsInteger = channelAsInteger[0]
 
-		if (sampleInteger < 0):
-			sampleInteger = 0 - sampleInteger # Unipolar!
+		if (channelAsInteger < 0):
+			channelAsInteger = 0 - channelAsInteger # Make readout unipolar
 
-		if (currentlyWriting == True):
-			# We are currently writing
-			outputFile.writeframes(sample)
+		allChannelsAsIntegers.append(channelAsInteger)
 
-			if (sampleInteger < threshold):
-				samplesBeneathThreshold = samplesBeneathThreshold + 1
+		if (channelAsInteger >= threshold):
+			allChannelsCurrentlyBeneathThreshold = False
 
-				if (samplesBeneathThreshold >= duration):
-					currentlyWriting = False
-					outputFile.close()
-			else:
-				samplesBeneathThreshold = 0
+	if (currentlyWriting == True):
+		# We are currently writing
+		outputFile.writeframes(allChannelsAsBinary)
+
+		if (allChannelsCurrentlyBeneathThreshold == True):
+			allChannelsBeneathThresholdDuration = allChannelsBeneathThresholdDuration + 1
+
+			if (allChannelsBeneathThresholdDuration >= duration):
+				currentlyWriting = False
+				outputFile.close()
 		else:
-			# We're not currently writing
-			if (sampleInteger >= threshold):
-				currentlyWriting = True
-				samplesBeneathThreshold = 0
-				outputFilenameNumber = outputFilenameNumber + 1
-				outputFilename = str(outputFilenameNumber)
-				outputFilename = outputFilename.zfill(2) # Pad to 2 digits
-				outputFilename = outputFilenamePrefix + '-' + outputFilename + '.wav'
-				print('Writing to', outputFilename)
-				outputFile = wave.open(outputFilename, 'w')
-				outputFile.setnchannels(inputFile.getnchannels())
-				outputFile.setsampwidth(inputFile.getsampwidth())
-				outputFile.setframerate(inputFile.getframerate())
+				allChannelsBeneathThresholdDuration = 0
+	else:
+		# We're not currently writing
+		if (allChannelsCurrentlyBeneathThreshold == False):
+			currentlyWriting = True
+			allChannelsBeneathThresholdDuration = 0
+			outputFilenameNumber = outputFilenameNumber + 1
+			outputFilename = str(outputFilenameNumber)
+			outputFilename = outputFilename.zfill(2) # Pad to 2 digits
+			outputFilename = outputFilenamePrefix + '-' + outputFilename + '.wav'
+			print('Writing to', outputFilename)
+			outputFile = wave.open(outputFilename, 'w')
+			outputFile.setnchannels(inputFile.getnchannels())
+			outputFile.setsampwidth(inputFile.getsampwidth())
+			outputFile.setframerate(inputFile.getframerate())
 
 if (currentlyWriting == True):
 	outputFile.close()
