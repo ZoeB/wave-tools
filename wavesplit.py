@@ -72,7 +72,6 @@ allChannelsBeneathThreshold = 0
 
 for iteration in range(0, inputFile.getnframes()):
 	allChannelsAsBinary = inputFile.readframes(1)
-	allChannelsAsIntegers = []
 	allChannelsCurrentlyBeneathThreshold = True
 
 	for channelNumber in range (numberOfChannels):
@@ -84,8 +83,6 @@ for iteration in range(0, inputFile.getnframes()):
 
 		if (channelAsInteger < 0):
 			channelAsInteger = 0 - channelAsInteger # Make readout unipolar
-
-		allChannelsAsIntegers.append(channelAsInteger)
 
 		if (channelAsInteger >= threshold):
 			allChannelsCurrentlyBeneathThreshold = False
