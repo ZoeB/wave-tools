@@ -1,0 +1,3 @@
+Rewrite the wave output for speed.
+Accept multiple files as command line arguments.
+Have a command line argument to overwrite the original files.
