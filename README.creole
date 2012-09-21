@@ -1,0 +1,11 @@
+== Wavesplit ==
+
+Wavesplit takes the monotony out of sampling, by automatically slicing
+up a recording into one small file per event.
+
+It takes a single 16-bit .wav file as an input and gives you several
+shorter .wav files as the output.  Other than the input filename,
+it can take two parameters: the threshold (get this loud to start
+writing a new file, get quieter again to prepare to stop); and the
+duration (stay quieter for this many samples in order to actually
+stop).
