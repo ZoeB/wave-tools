@@ -1,0 +1,5 @@
+== Makemono ==
+
+Makemono takes a stereo .wav file as an input and gives you a mono
+.wav file as the output.  This is useful if, for instance, you have
+a mono synthesiser and a stereo-only sound recorder.
