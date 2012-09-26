@@ -1,19 +1,34 @@
 == Wave Tools ==
 
-=== Wavesplit ===
+=== CD to Amiga ===
 
-Wavesplit takes the monotony out of sampling, by automatically slicing
-up a recording into one small file per event.
+//Converts 16-bit 44.1kHz .wav files into 8-bit 8363Hz .pcm files//
 
-It takes a single 16-bit .wav file as an input and gives you several
-shorter .wav files as the output.  Other than the input filename,
-it can take two parameters: the threshold (get this loud to start
-writing a new file, get quieter again to prepare to stop); and the
-duration (stay quieter for this many samples in order to actually
-stop).
+Possible uses:
+
+* Importing modern sound recordings into old tracker software
 
 === Makemono ===
 
-Makemono takes a stereo .wav file as an input and gives you a mono
-.wav file as the output.  This is useful if, for instance, you have
-a mono synthesiser and a stereo-only sound recorder.
+//Converts stereo .wav files into mono .wav files//
+
+Possible uses:
+
+* Recording a mono sound source with a stereo-only sound recorder
+
+=== Wavesplit ===
+
+//Splits up a big .wav file into several smaller .wav files, one per
+sound//
+
+Possible uses:
+
+* Automating sample splitting
+* Espionage?
+
+Wavesplit takes a single 16-bit .wav file as an input and gives you
+several shorter .wav files as the output.  Other than the input
+filename, it can take two parameters: the threshold (get this loud
+to start writing a new file, get quieter again to prepare to stop);
+and the duration (stay quieter for this many samples in order to
+actually stop).

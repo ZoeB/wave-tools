@@ -1,8 +1,8 @@
-# Wavesplit, version 3, for Python 3.
-# By ZoëB, 2012-03-31 to 2012-04-03.
+# Wavesplit
+# For Python 3
+# By Zoe Blade
 
-# This splits up a .wav file into several smaller .wav files,
-# one per sound, leaving out the gaps.
+# Splits up a big .wav file into several smaller .wav files, one per sound
 
 import struct # For converting the (two's complement?) binary data to integers
 import sys # For command line arguments
