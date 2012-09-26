@@ -2,7 +2,7 @@
 # For Python 3
 # By Zoe Blade
 
-# Converts 16-bit 44.1kHz .wav files into 8-bit 8363Hz .pcm files
+# Converts 16-bit (or 24-bit) 44.1kHz .wav files into 8-bit 8363Hz .pcm files
 
 import math # For floor
 import struct # For converting the (two's complement?) binary data to integers
@@ -48,8 +48,10 @@ for inputFilename in inputFilenames:
 		print(inputFilename, "isn't mono.  Skipping.")
 		continue
 
-	if (inputFile.getsampwidth() != 2):
-		print(inputFilename, "isn't 16-bit.  Skipping.")
+	sampleResolution = inputFile.getsampwidth()
+
+	if (sampleResolution != 1 and sampleResolution != 2 and sampleResolution != 3):
+		print(inputFilename, "is neither 8-bit, 16-bit nor 24-bit.  Skipping.")
 		continue
 
 	i = 0
@@ -65,9 +67,16 @@ for inputFilename in inputFilenames:
 		if (whenToTakeASample[i] == 0):
 			continue
 
-		datumAsInteger = struct.unpack('<h', datumAsBinary)
-		datumAsInteger = int(datumAsInteger[0])
-		datumAsInteger = datumAsInteger >> 8 # Convert from 16-bit to 8-bit
+		if (sampleResolution == 3):
+			datumAsInteger = struct.unpack('<3b', datumAsBinary)
+			datumAsInteger = int(datumAsInteger[2]) # Ignore all but the most significant byte
+		elif (sampleResolution == 2):
+			datumAsInteger = struct.unpack('<2b', datumAsBinary)
+			datumAsInteger = int(datumAsInteger[1]) # Ignore all but the most significant byte
+		else:
+			datumAsInteger = struct.unpack('<b', datumAsBinary)
+			datumAsInteger = int(datumAsInteger[0])
+
 		datumAsBinary = struct.pack('<B', datumAsInteger + 128)
 		outputFile.write(datumAsBinary)
 
