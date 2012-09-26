@@ -2,7 +2,7 @@
 
 === Makeamiga ===
 
-//Converts 44.1kHz .wav files into 8-bit 8363Hz .pcm files//
+//Converts mono .wav files into mono 8-bit 8363Hz .pcm files//
 
 Possible uses:
 

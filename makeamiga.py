@@ -2,7 +2,7 @@
 # For Python 3
 # By Zoe Blade
 
-# Converts 44.1kHz .wav files into 8-bit 8363Hz .pcm files
+# Converts mono .wav files into mono 8-bit 8363Hz .pcm files
 
 import math # For floor
 import struct # For converting the (two's complement?) binary data to integers
@@ -19,19 +19,6 @@ for argument in sys.argv:
 if (len(inputFilenames) == 0):
 	print("Please specify which .wav files you would like to convert.")
 	exit()
-
-# Make lookup table
-whenToTakeASample = []
-lastAmigaQualitySample = -1
-
-for cdQualitySample in range(44100):
-	currentAmigaQualitySample = math.floor(cdQualitySample / 44100 * 8363)
-
-	if (currentAmigaQualitySample > lastAmigaQualitySample):
-		whenToTakeASample.append(1)
-		lastAmigaQualitySample = currentAmigaQualitySample
-	else:
-		whenToTakeASample.append(0)
 
 # Cycle through files
 for inputFilename in inputFilenames:
@@ -54,6 +41,21 @@ for inputFilename in inputFilenames:
 		print(inputFilename, "is neither 8-bit, 16-bit nor 24-bit.  Skipping.")
 		continue
 
+	sampleFrequency = inputFile.getframerate()
+
+	# Make lookup table
+	whenToTakeASample = []
+	lastAmigaQualitySample = -1
+
+	for originalQualitySample in range(sampleFrequency):
+		currentAmigaQualitySample = math.floor(originalQualitySample / sampleFrequency * 8363)
+
+		if (currentAmigaQualitySample > lastAmigaQualitySample):
+			whenToTakeASample.append(1)
+			lastAmigaQualitySample = currentAmigaQualitySample
+		else:
+			whenToTakeASample.append(0)
+
 	inputSamples = 0
 	outputSamples = 0
 
@@ -61,7 +63,7 @@ for inputFilename in inputFilenames:
 		datumAsBinary = inputFile.readframes(1)
 		inputSamples = inputSamples + 1
 
-		if (inputSamples == 44100):
+		if (inputSamples == sampleFrequency):
 			inputSamples = 0
 
 		if (whenToTakeASample[inputSamples] == 0):
