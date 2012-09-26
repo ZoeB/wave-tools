@@ -1,10 +1,14 @@
 == Things to do ==
 
-=== Wavesplit ===
+=== Makeamiga ===
 
-* Rewrite the wave output for speed
-* Accept multiple files as command line arguments
+* Allow command line specification of arbitrary --samplefrequency and --bitresolution, plus preset options like --tracker that do what it currently does (8-bit, 8363Hz).  Then rename the program to something more generic.
 
 === Makemono ===
 
 * Have a command line argument to overwrite the original files
+
+=== Wavesplit ===
+
+* Rewrite the wave output for speed
+* Accept multiple files as command line arguments
