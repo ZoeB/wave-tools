@@ -54,17 +54,23 @@ for inputFilename in inputFilenames:
 		print(inputFilename, "is neither 8-bit, 16-bit nor 24-bit.  Skipping.")
 		continue
 
-	i = 0
+	inputSamples = 0
+	outputSamples = 0
 
 	for iteration in range (0, inputFile.getnframes()):
 		datumAsBinary = inputFile.readframes(1)
+		inputSamples = inputSamples + 1
 
-		i = i + 1
+		if (inputSamples == 44100):
+			inputSamples = 0
 
-		if (i == 44100):
-			i = 0
+		if (whenToTakeASample[inputSamples] == 0):
+			continue
 
-		if (whenToTakeASample[i] == 0):
+		outputSamples = outputSamples + 1
+
+		if (outputSamples > 64000):
+			# Scream Tracker has a maximum sample size of 64000
 			continue
 
 		if (sampleResolution == 3):
