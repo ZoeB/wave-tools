@@ -1,8 +1,10 @@
-== Wavesplit ==
+== Things to do ==
+
+=== Wavesplit ===
 
 * Rewrite the wave output for speed
 * Accept multiple files as command line arguments
 
-== Makemono ==
+=== Makemono ===
 
 * Have a command line argument to overwrite the original files
