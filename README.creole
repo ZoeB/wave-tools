@@ -9,3 +9,9 @@ it can take two parameters: the threshold (get this loud to start
 writing a new file, get quieter again to prepare to stop); and the
 duration (stay quieter for this many samples in order to actually
 stop).
+
+== Makemono ==
+
+Makemono takes a stereo .wav file as an input and gives you a mono
+.wav file as the output.  This is useful if, for instance, you have
+a mono synthesiser and a stereo-only sound recorder.
