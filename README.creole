@@ -1,8 +1,8 @@
 == Wave Tools ==
 
-=== CD to Amiga ===
+=== Makeamiga ===
 
-//Converts 16-bit (or 24-bit) 44.1kHz .wav files into 8-bit 8363Hz .pcm files//
+//Converts 44.1kHz .wav files into 8-bit 8363Hz .pcm files//
 
 Possible uses:
 

@@ -2,7 +2,7 @@
 # For Python 3
 # By Zoe Blade
 
-# Converts 16-bit (or 24-bit) 44.1kHz .wav files into 8-bit 8363Hz .pcm files
+# Converts 44.1kHz .wav files into 8-bit 8363Hz .pcm files
 
 import math # For floor
 import struct # For converting the (two's complement?) binary data to integers
