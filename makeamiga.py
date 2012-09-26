@@ -1,4 +1,4 @@
-# CD to Amiga
+# Makeamiga
 # For Python 3
 # By Zoe Blade
 
