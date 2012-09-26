@@ -16,7 +16,7 @@ inputFilename = ''
 # Override the defaults
 for argument in sys.argv:
 	# Override the filename
-	if (argument[-4:] == '.wav'):
+	if (argument[-4:] == '.wav' or argument[-4:] == '.WAV'):
 		inputFilename = argument
 		continue
 
