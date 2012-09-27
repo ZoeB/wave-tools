@@ -13,7 +13,7 @@ import wave # For .wav input and output
 inputFilenames = []
 
 for argument in sys.argv:
-	if (argument[-4:] == '.wav' or argument[-4:] == '.WAV'):
+	if (argument[-4:].lower() == '.wav'):
 		inputFilenames.append(argument)
 
 if (len(inputFilenames) == 0):

@@ -2,7 +2,6 @@
 
 === All ===
 
-* Filename extension matching should be truly case insensitive.  Make it lower case before performing the comparison.  That way, even .WaV, .waV, etc, will match.
 * Make sure all programs are capable of batch processing
 * Have a command line argument to overwrite the original files, eg --overwrite or --replace
 
