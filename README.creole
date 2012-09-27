@@ -16,6 +16,14 @@ Possible uses:
 
 * Recording a mono sound source with a stereo-only sound recorder
 
+=== Makestereo ===
+
+//Converts mono .wav files into stereo .wav files//
+
+Possible uses:
+
+* Making mono sound files play nicely with modern stereo-only players (eg getting Not Disturbing Mammoth to work properly on the iPhone)
+
 === Wavesplit ===
 
 //Splits up a big .wav file into several smaller .wav files, one per

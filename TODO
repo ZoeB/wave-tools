@@ -1,5 +1,10 @@
 == Things to do ==
 
+=== All ===
+
+* Filename extension matching should be truly case insensitive.  Make it lower case before performing the comparison.  That way, even .WaV, .waV, etc, will match.
+* Make sure all programs are capable of batch processing
+
 === Makeamiga ===
 
 * Allow command line specification of arbitrary --samplefrequency and --bitresolution, plus preset options like --tracker that do what it currently does (8-bit, 8363Hz).  Then rename the program to something more generic.
