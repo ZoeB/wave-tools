@@ -4,16 +4,16 @@
 
 * Filename extension matching should be truly case insensitive.  Make it lower case before performing the comparison.  That way, even .WaV, .waV, etc, will match.
 * Make sure all programs are capable of batch processing
+* Have a command line argument to overwrite the original files, eg --overwrite or --replace
 
 === Makeamiga ===
 
 * Allow command line specification of arbitrary --samplefrequency and --bitresolution, plus preset options like --tracker that do what it currently does (8-bit, 8363Hz).  Then rename the program to something more generic.
+* Perhaps this should be split up into two different programs: one to change the bit depth, and another to change the sample frequency?
+* At any rate, it should be able to increase the sample frequency and bit resolution just as easily as decrease them.  (Instead of skipping things, it should merely repeat them.)
 
 === Makemono ===
 
-* Have a command line argument to overwrite the original files
+=== Makestereo ===
 
 === Wavesplit ===
-
-* Rewrite the wave output for speed
-* Accept multiple files as command line arguments
