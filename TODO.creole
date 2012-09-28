@@ -2,7 +2,7 @@
 
 === All ===
 
-* Make sure all programs are capable of batch processing
+* They should work with 8-bit and 24-bit .wav files too, not just 16-bit
 * Have a command line argument to overwrite the original files, eg --overwrite or --replace
 
 === Makeamiga ===

@@ -26,7 +26,6 @@ for inputFilename in inputFilenames:
 
 	try:
 		inputFile = wave.open(inputFilename, 'r')
-		outputFile = open(outputFilename, 'wb')
 	except:
 		print(inputFilename, "doesn't look like a valid .wav file.  Skipping.")
 		continue
@@ -39,6 +38,12 @@ for inputFilename in inputFilenames:
 
 	if (sampleResolution != 1 and sampleResolution != 2 and sampleResolution != 3):
 		print(inputFilename, "is neither 8-bit, 16-bit nor 24-bit.  Skipping.")
+		continue
+
+	try:
+		outputFile = open(outputFilename, 'wb')
+	except:
+		print("I couldn't write to", outputFilename, "Skipping.")
 		continue
 
 	sampleFrequency = inputFile.getframerate()

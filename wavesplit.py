@@ -11,13 +11,13 @@ import wave # For .wav input and output
 # Set sensible defaults
 threshold = 1024 # This has to be a number between 1 and 32767
 duration = 11025 # Measured in single samples
-inputFilename = ''
+inputFilenames = []
 
 # Override the defaults
 for argument in sys.argv:
 	# Override the filename
 	if (argument[-4:].lower() == '.wav'):
-		inputFilename = argument
+		inputFilenames.append(argument)
 		continue
 
 	# Override the threshold
@@ -42,7 +42,7 @@ for argument in sys.argv:
 			print('The duration must be a positive integer')
 			exit()
 
-if (inputFilename == ''):
+if (len(inputFilenames) == 0):
 	print("""\
 Usage:
 python3 wavesplit.py [option...] input.wav
@@ -55,64 +55,68 @@ Options: (may appear before or after arguments)
 	""")
 	exit()
 
-outputFilenamePrefix = inputFilename[:-4]
-outputFilenameNumber = 0
+# Cycle through files
+for inputFilename in inputFilenames:
+	outputFilenamePrefix = inputFilename[:-4]
+	outputFilenameNumber = 0
 
-try:
-	inputFile = wave.open(inputFilename, 'r')
+	try:
+		inputFile = wave.open(inputFilename, 'r')
+	except:
+		print(inputFilename, "doesn't look like a valid .wav file.  Skipping.")
+		continue
+
 	framerate = inputFile.getframerate()
 	numberOfChannels = inputFile.getnchannels()
 	sampleWidth = inputFile.getsampwidth()
-except:
-	print('Please specify a valid .wav file')
-	exit()
 
-currentlyWriting = False
-allChannelsBeneathThreshold = 0
+	currentlyWriting = False
+	allChannelsBeneathThreshold = 0
 
-for iteration in range(0, inputFile.getnframes()):
-	allChannelsAsBinary = inputFile.readframes(1)
-	allChannelsCurrentlyBeneathThreshold = True
+	for iteration in range(0, inputFile.getnframes()):
+		allChannelsAsBinary = inputFile.readframes(1)
+		allChannelsCurrentlyBeneathThreshold = True
 
-	for channelNumber in range (numberOfChannels):
-		channelNumber = channelNumber + 1
-		channelStart = (channelNumber - 1) * sampleWidth
-		channelEnd = channelNumber * sampleWidth
-		channelAsInteger = struct.unpack('<h', allChannelsAsBinary[channelStart:channelEnd])
-		channelAsInteger = channelAsInteger[0]
+		for channelNumber in range (numberOfChannels):
+			channelNumber = channelNumber + 1
+			channelStart = (channelNumber - 1) * sampleWidth
+			channelEnd = channelNumber * sampleWidth
+			channelAsInteger = struct.unpack('<h', allChannelsAsBinary[channelStart:channelEnd])
+			channelAsInteger = channelAsInteger[0]
 
-		if (channelAsInteger < 0):
-			channelAsInteger = 0 - channelAsInteger # Make readout unipolar
+			if (channelAsInteger < 0):
+				channelAsInteger = 0 - channelAsInteger # Make readout unipolar
 
-		if (channelAsInteger >= threshold):
-			allChannelsCurrentlyBeneathThreshold = False
+			if (channelAsInteger >= threshold):
+				allChannelsCurrentlyBeneathThreshold = False
+
+		if (currentlyWriting == True):
+			# We are currently writing
+			outputFile.writeframes(allChannelsAsBinary)
+
+			if (allChannelsCurrentlyBeneathThreshold == True):
+				allChannelsBeneathThresholdDuration = allChannelsBeneathThresholdDuration + 1
+
+				if (allChannelsBeneathThresholdDuration >= duration):
+					currentlyWriting = False
+					outputFile.close()
+			else:
+					allChannelsBeneathThresholdDuration = 0
+		else:
+			# We're not currently writing
+			if (allChannelsCurrentlyBeneathThreshold == False):
+				currentlyWriting = True
+				allChannelsBeneathThresholdDuration = 0
+				outputFilenameNumber = outputFilenameNumber + 1
+				outputFilename = str(outputFilenameNumber)
+				outputFilename = outputFilename.zfill(2) # Pad to 2 digits
+				outputFilename = outputFilenamePrefix + '-' + outputFilename + '.wav'
+				print('Writing to', outputFilename)
+				outputFile = wave.open(outputFilename, 'w')
+				outputFile.setnchannels(inputFile.getnchannels())
+				outputFile.setsampwidth(inputFile.getsampwidth())
+				outputFile.setframerate(inputFile.getframerate())
 
 	if (currentlyWriting == True):
-		# We are currently writing
-		outputFile.writeframes(allChannelsAsBinary)
-
-		if (allChannelsCurrentlyBeneathThreshold == True):
-			allChannelsBeneathThresholdDuration = allChannelsBeneathThresholdDuration + 1
-
-			if (allChannelsBeneathThresholdDuration >= duration):
-				currentlyWriting = False
-				outputFile.close()
-		else:
-				allChannelsBeneathThresholdDuration = 0
-	else:
-		# We're not currently writing
-		if (allChannelsCurrentlyBeneathThreshold == False):
-			currentlyWriting = True
-			allChannelsBeneathThresholdDuration = 0
-			outputFilenameNumber = outputFilenameNumber + 1
-			outputFilename = str(outputFilenameNumber)
-			outputFilename = outputFilename.zfill(2) # Pad to 2 digits
-			outputFilename = outputFilenamePrefix + '-' + outputFilename + '.wav'
-			print('Writing to', outputFilename)
-			outputFile = wave.open(outputFilename, 'w')
-			outputFile.setnchannels(inputFile.getnchannels())
-			outputFile.setsampwidth(inputFile.getsampwidth())
-			outputFile.setframerate(inputFile.getframerate())
-
-if (currentlyWriting == True):
-	outputFile.close()
+		outputFile.close()
+	print(inputFilename, "finished splitting")
