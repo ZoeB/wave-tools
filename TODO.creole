@@ -3,16 +3,21 @@
 === All ===
 
 * They should work with 8-bit and 24-bit .wav files too, not just 16-bit
+* Optimise .wav writing so the waveform's stored in memory first, then all written out in one go.  Yes, this isn't very Pythonic, and will make it more difficult to port to C, but it will speed the programs up a lot, and it will allow the next feature, original file overwriting.
 * Have a command line argument to overwrite the original files, eg --overwrite or --replace
 
 === Makeamiga ===
 
-* Allow command line specification of arbitrary --samplefrequency and --bitresolution, plus preset options like --tracker that do what it currently does (8-bit, 8363Hz).  Then rename the program to something more generic.
+* Allow command line specification of arbitrary --sample-frequency and --bit-resolution, plus preset options like --tracker that do what it currently does (8-bit, 8363Hz).  Then rename the program to something more generic.
 * Perhaps this should be split up into two different programs: one to change the bit depth, and another to change the sample frequency?
 * At any rate, it should be able to increase the sample frequency and bit resolution just as easily as decrease them.  (Instead of skipping things, it should merely repeat them.)
 
 === Makemono ===
 
 === Makestereo ===
+
+=== Normalise ===
+
+* Make this
 
 === Wavesplit ===
