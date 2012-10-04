@@ -21,3 +21,16 @@
 * Make this
 
 === Wavesplit ===
+
+----
+
+A possibly useful, albeit odd, program would be one that read in an
+unlimited number of .wav files and created a .png, maybe 16 bytes
+wide, of an unlimited height, which had a pixel for each .wav file,
+representing its loudest peak.  This would make it easy to spot at
+a glance whether any files (albeit not which ones) were silent, and
+whether the files are normalised or not.
+
+A possibly more sensible approach would be a program that you give
+a number to, and a list of files, and it lists the files which don't
+reach that number with their volume peaks.
