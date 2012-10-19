@@ -12,7 +12,15 @@
 * Perhaps this should be split up into two different programs: one to change the bit depth, and another to change the sample frequency?
 * At any rate, it should be able to increase the sample frequency and bit resolution just as easily as decrease them.  (Instead of skipping things, it should merely repeat them.)
 
+=== Makedoepfer ===
+
+* Make this, to convert .wav files to .syx files containing MIDI sysex data specific to the Doepfer A-112
+
 === Makemono ===
+
+=== Makesampledump ===
+
+* Make this, to convert .wav files to .syx files containing MIDI sample dump standard format data
 
 === Makestereo ===
 
