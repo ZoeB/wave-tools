@@ -92,9 +92,9 @@ for inputFilename in inputFilenames:
 	else: # bank == 2
 		outputFile.write(b'\x01')
 
-	# Write the sample frequency.  I'm not entirely sure what the (German) spec is saying, but it looks like this might perhaps be divided by 5, as it looks like "200 nSek" (miliseconds?) are somehow involved.  So let's try that!
+	# Write the sample frequency.  It looks like the A-112's clock cycle is once every 200 nanoseconds, in other words 5mHz, and it needs this to be divided by the sample frequency, so it knows how many cycles to pause for in between updating the output value.
 	sampleFrequency = inputFile.getframerate()
-	sampleFrequency = int(sampleFrequency / 5)
+	sampleFrequency = int(5000000 / sampleFrequency)
 	sampleFrequencyByte1 = sampleFrequency >> 9 & 127 # I'm going to guess the most significant byte goes first, but it's just a guess.
 	sampleFrequencyByte2 = sampleFrequency >> 1 & 127
 	sampleFrequencyByte3 = (sampleFrequency >> 7 & 2) & (sampleFrequency & 1) # Take the 16 bit sample frequency and only keep the eighth and sixteenth bits, storing them in bits seven and eight (counting from left to right)
