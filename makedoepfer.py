@@ -97,7 +97,7 @@ for inputFilename in inputFilenames:
 	sampleFrequency = int(sampleFrequency / 5)
 	sampleFrequencyByte1 = sampleFrequency >> 9 & 127 # I'm going to guess the most significant byte goes first, but it's just a guess.
 	sampleFrequencyByte2 = sampleFrequency >> 1 & 127
-	sampleFrequencyByte3 = (sampleFrequency >> 7 & 3) & (sampleFrequency & 1) # It's late and this may be stupid.  I'm trying to take a (presumably 16 bit) sample frequency and only keep the eighth and sixteenth bits, in places fifteen and sixteen (counting from left to right).
+	sampleFrequencyByte3 = (sampleFrequency >> 7 & 2) & (sampleFrequency & 1) # Take the 16 bit sample frequency and only keep the eighth and sixteenth bits, storing them in bits seven and eight (counting from left to right)
 	outputFile.write(bytes(struct.pack('B', sampleFrequencyByte1)))
 	outputFile.write(bytes(struct.pack('B', sampleFrequencyByte2)))
 	outputFile.write(bytes(struct.pack('B', sampleFrequencyByte3)))
