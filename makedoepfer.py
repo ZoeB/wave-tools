@@ -78,7 +78,7 @@ for inputFilename in inputFilenames:
 
 	# Pad anything under 64k
 	while (len(data) < 65536):
-		data.append(b'\x3F') # TODO: Check what to make this so the speaker's centered.  127?  128?  0?  255?
+		data.append(b'\x80')
 
 	# Write sysex header: F0 = start sysex dump; 00 20 20 = for Doepfer equipment; 7E = a sampledump for the A-112 module
 	outputFile.write(b'\xF0')
