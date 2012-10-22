@@ -9,7 +9,10 @@ import sys # For command line arguments
 import wave # For .wav input and output
 
 # Set sensible defaults
+bank = 1
 inputFilenames = []
+
+acceptableBanks = [1, 2]
 
 # Override the defaults
 for argument in sys.argv:
@@ -18,10 +21,23 @@ for argument in sys.argv:
 		inputFilenames.append(argument)
 		continue
 
+	# Override the bank
+	if (argument[:7] == '--bank='):
+		if (int(argument[7:]) in acceptableBanks):
+			bank = int(argument[7:])
+			continue
+		else:
+			print(argument[7:], "ain't any bank I ever heard of")
+			exit()
+
 if (len(inputFilenames) == 0):
 	print("""\
 Usage:
 python3 makedoepfer.py [option...] input.wav
+
+Options: (may appear before or after arguments)
+	--bank=foo
+		set which A-112 bank to write to (default is 1, other option is 2)
 	""")
 	exit()
 
@@ -70,7 +86,11 @@ for inputFilename in inputFilenames:
 	outputFile.write(b'\x20')
 	outputFile.write(b'\x20')
 	outputFile.write(b'\x7E')
-	outputFile.write(b'\x00') # It looks like the A-112 has two different pages of memory?  I should read up on this.
+
+	if (bank == 1):
+		outputFile.write(b'\x00')
+	else: # bank == 2
+		outputFile.write(b'\x01')
 
 	# Write the sample frequency.  I'm not entirely sure what the (German) spec is saying, but it looks like this might perhaps be divided by 5, as it looks like "200 nSek" (miliseconds?) are somehow involved.  So let's try that!
 	sampleFrequency = inputFile.getframerate()
