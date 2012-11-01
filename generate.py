@@ -10,9 +10,11 @@ import sys # For command line arguments
 import wave # For .wav output
 
 # Set sensible defaults
+mode = 'lowpass'
 waveform = 'sawtooth'
 outputFilenames = []
 
+acceptableModes = ['highpass', 'lowpass']
 acceptableWaveforms = ['sawtooth', 'square', 'triangle']
 
 # Override the defaults
@@ -21,6 +23,15 @@ for argument in sys.argv:
 	if (argument[-4:].lower() == '.wav'):
 		outputFilenames.append(argument)
 		continue
+
+	# Override the mode
+	if (argument[:7] == '--mode='):
+		if (argument[7:] in acceptableModes):
+			mode = argument[7:]
+			continue
+		else:
+			print(argument[7:], "ain't any mode I ever heard of")
+			exit()
 
 	# Override the waveform type
 	if (argument[:11] == '--waveform='):
@@ -37,6 +48,8 @@ Usage:
 python3 generate.py [option...] output.wav
 
 Options: (may appear before or after arguments)
+	--mode=foo
+		set mode (default is lowpass, other option is highpass)
 	--waveform=foo
 		set which type of waveform to generate (default is sawtooth,
 		other options are square and triangle)
@@ -61,17 +74,30 @@ for outputFilename in outputFilenames:
 		for sample in range(256):
 			wavestate = 0 # Start off in the middle
 
-			for harmonic in range(1, maxHarmonic + 1):
-				if (waveform == 'sawtooth'):
-					wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic)
-				elif (waveform == 'square'):
-					if (harmonic & 1):
+			if mode == 'highpass':
+				for harmonic in range(maxHarmonic, 257):
+					if (waveform == 'sawtooth'):
 						wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic)
-				elif (waveform == 'triangle'):
-					if (harmonic & 3 == 3):
-						wavestate = wavestate - (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
-					elif (harmonic & 1):
-						wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
+					elif (waveform == 'square'):
+						if (harmonic & 1):
+							wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic)
+					elif (waveform == 'triangle'):
+						if (harmonic & 3 == 3):
+							wavestate = wavestate - (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
+						elif (harmonic & 1):
+							wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
+			else: # Mode == lowpass
+				for harmonic in range(1, maxHarmonic + 1):
+					if (waveform == 'sawtooth'):
+						wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic)
+					elif (waveform == 'square'):
+						if (harmonic & 1):
+							wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic)
+					elif (waveform == 'triangle'):
+						if (harmonic & 3 == 3):
+							wavestate = wavestate - (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
+						elif (harmonic & 1):
+							wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
 
 			wavestate = int(wavestate / 1.85)
 			wavestateAsBinary = struct.pack('B', wavestate + 128);
