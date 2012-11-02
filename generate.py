@@ -86,7 +86,7 @@ for outputFilename in outputFilenames:
 							wavestate = wavestate - (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
 						elif (harmonic & 1):
 							wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic ** 2)
-			else: # Mode == lowpass
+			else: # Mode == 'lowpass'
 				for harmonic in range(1, maxHarmonic + 1):
 					if (waveform == 'sawtooth'):
 						wavestate = wavestate + (sineWaveLookupTable[sample * harmonic % 256] / harmonic)
