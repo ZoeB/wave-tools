@@ -1,2 +1,4 @@
 *.pcm
+*.swp
 *.syx
+__pycache__
