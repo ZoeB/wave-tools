@@ -124,12 +124,12 @@ for inputFilename in inputFilenames:
 
 		if (bitNumber == 7):
 			bitNumber = 0
-			byteatumAsBinary = struct.pack('B', byte)
-			outputFile.write(bytes(byteatumAsBinary))
+			byteAsBinary = struct.pack('B', byte)
+			outputFile.write(bytes(byteAsBinary))
 
 	# Output last byte, even though it's not full
-	byteatumAsBinary = struct.pack('B', byte)
-	outputFile.write(bytes(byteatumAsBinary))
+	byteAsBinary = struct.pack('B', byte)
+	outputFile.write(bytes(byteAsBinary))
 
 	# Output sysex footer: F7 = end sysex dump
 	outputFile.write(b'\xF7')
