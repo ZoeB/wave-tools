@@ -12,6 +12,7 @@ import wave # For .wav input and output
 amplitudeThreshold = 1024 # This has to be a number between 1 and 32767
 frequencyThreshold = 1600 # This should be a number between 1 and the waveform's sample rate
 baudRate = 300 # This should be a number between 1 and the waveform's sample rate
+endianness = "big" # This should be either "big" or "little"
 inputFilenames = []
 
 # Override the defaults
@@ -52,6 +53,16 @@ for argument in sys.argv:
 			print('The baud rate should be an integer between 1 and the sample rate')
 			exit()
 
+	if (argument[:13] == '--endianness='):
+		argument = argument[13:]
+
+		if (argument == "big" or argument == "little"):
+			endianness = argument
+			continue
+		else:
+			print('The endianness should be either big or little')
+			exit()
+
 if (len(inputFilenames) == 0):
 	print("""\
 Usage:
@@ -64,6 +75,8 @@ Options: (may appear before or after arguments)
 		set the cutoff point between low and high frequency, in Hertz (default is 1600, any number between 1 and the sample rate is valid)
 	--baud-rate=foo
 		set the baud rate, in Hertz (default is 300, any number between 1 and the sample rate is valid)
+	--endianness=foo
+		set the endianness (default is "big", "little" is also valid)
 	""")
 	exit()
 
@@ -174,7 +187,11 @@ for inputFilename in inputFilenames:
 	position = 0
 
 	for bit in truncatedData:
-		byte = byte | bit << position
+		if endianness == "big":
+			byte = byte | bit << position
+		else:
+			byte = byte | bit << 7 - position
+
 		position = position + 1
 
 		if position == 8:
