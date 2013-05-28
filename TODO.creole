@@ -16,6 +16,21 @@
 
 * Make this, to convert .wav files to .syx files containing MIDI sysex data specific to the Doepfer A-112
 
+=== Makeloopable ===
+
+Alternatively, "truncate-left" and "truncate-right".  One or two
+programs, which independently allow trimming off the beginning of
+the sample to the first upwards (negative to positive) zero-crossing,
+and the end of the sample back to the last upwards zero-crossing.
+As it would perform the cut just *inside* the zero-crossing, it could
+be run multiple times to keep trimming one more cycle off the waveform.
+
+They're intended to only be used on samples which are already cropped
+to miss off their beginning and end, hence they needn't concern
+themselves with thresholds.
+
+These would help people to make samples which seamlessly loop.
+
 === Makemono ===
 
 === Makesampledump ===
