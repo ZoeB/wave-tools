@@ -43,6 +43,20 @@ These would help people to make samples which seamlessly loop.
 
 * Make this
 
+=== Renametopitch ===
+
+For each specified file (presumably split out with Wavesplit, but
+not necessarily), attempt to determine its pitch (using the method
+I worked out and implemented earlier in other software), and if it
+has one TTET-rounded-off pitch that's more common than others within
+the sample, rename the file to append either the note name (foo.wav
+=> foo-c-2.wav, foo.wav => foo-fs2.wav) or the MIDI note number
+(foo.wav => foo-24.wav, foo.wav => foo-30.wav).
+
+A nice option would be to specify the root filename, as obviously
+all the existing files won't be able to have the same filename,
+and/or to extend Wavesplit to incorporate Renametopitch's functionality.
+
 === Wavesplit ===
 
 ----
