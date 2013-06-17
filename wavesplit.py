@@ -4,6 +4,7 @@
 
 # Splits up a big .wav file into several smaller .wav files, one per sound
 
+import glob # For command line wildcards
 import struct # For converting the (two's complement?) binary data to integers
 import sys # For command line arguments
 import wave # For .wav input and output
@@ -17,7 +18,11 @@ inputFilenames = []
 for argument in sys.argv:
 	# Override the filename
 	if (argument[-4:].lower() == '.wav'):
-		inputFilenames.append(argument)
+		filenames = glob.glob(argument)
+
+		for filename in filenames:
+			inputFilenames.append(filename)
+
 		continue
 
 	# Override the threshold
