@@ -53,7 +53,7 @@ A nice option would be to specify the root filename, as obviously
 all the existing files won't be able to have the same filename,
 and/or to extend Wavesplit to incorporate Renametopitch's functionality.
 
-=== Renits ===
+=== Rni ===
 
 Rename an Impulse Tracker sample, updating both the filename in the
 operating system and the copy of the filename stored near the beginning
