@@ -6,6 +6,11 @@
 * Optimise .wav writing so the waveform's stored in memory first, then all written out in one go.  Yes, this isn't very Pythonic, and will make it more difficult to port to C, but it will speed the programs up a lot, and it will allow the next feature, original file overwriting.
 * Have a command line argument to overwrite the original files, eg --overwrite or --replace
 
+=== Impulse Tracker ===
+
+Make a program to export wave files from Impulse Tracker sample
+files.
+
 === Makeamiga ===
 
 * Allow command line specification of arbitrary --sample-frequency and --bit-resolution, plus preset options like --tracker that do what it currently does (8-bit, 8363Hz).  Then rename the program to something more generic.
@@ -52,12 +57,6 @@ the sample, rename the file to append either the note name (foo.wav
 A nice option would be to specify the root filename, as obviously
 all the existing files won't be able to have the same filename,
 and/or to extend Wavesplit to incorporate Renametopitch's functionality.
-
-=== Rni ===
-
-Rename an Impulse Tracker sample, updating both the filename in the
-operating system and the copy of the filename stored near the beginning
-of the file itself.
 
 === Wavesplit ===
 
