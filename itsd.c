@@ -9,14 +9,24 @@ void describeSample(FILE *ifp, FILE *ofp) {
 	int character;
 
 	/* TODO: Fix redundancy in checking if limit's reached */
-	while (characterNumber < 72) {
+	while (1) {
 		character = getc(ifp);
 
-		if (character == EOF || characterNumber == 72) {
+		if (character == EOF || characterNumber > 44) {
+			putc('\n', ofp);
 			return;
 		}
 
-		putc(character, ofp);
+		if ((characterNumber > 3 && characterNumber < 16) || (characterNumber > 19)) {
+			if (character == '\0') {
+				putc(' ', ofp);
+			} else {
+				putc(character, ofp);
+			}
+		} else if (characterNumber == 16) {
+				putc(' ', ofp);
+		}
+
 		characterNumber++;
 	}
 
