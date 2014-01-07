@@ -13,6 +13,14 @@ Possible uses:
 
 * Making interesting pitched sounds on the Doepfer A-112
 
+=== Impulse Tracker sample describer (ITSD) ===
+
+// Extracts filenames and sample names from .ITS files//
+
+Possible uses:
+
+* Automatically generating lists of Impulse Tracker samples in your library
+
 === Makeamiga ===
 
 //Converts mono .wav files into mono 8-bit 8363Hz .pcm files//
