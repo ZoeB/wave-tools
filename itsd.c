@@ -12,7 +12,11 @@ void describeSample(FILE *ifp, FILE *ofp) {
 	while (1) {
 		character = getc(ifp);
 
-		if (character == EOF || characterNumber > 44) {
+		if (character == EOF || (characterNumber == 0 && character != 'I') || (characterNumber == 1 && character != 'M') || (characterNumber == 2 && character != 'P') || (characterNumber == 3 && character != 'S')) {
+			return;
+		}
+
+		if (characterNumber > 44) {
 			putc('\n', ofp);
 			return;
 		}
