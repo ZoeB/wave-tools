@@ -15,11 +15,12 @@ Possible uses:
 
 === Impulse Tracker file lister (itls) ===
 
-// Extracts filenames and song/instrument/sample names from .ITS files//
+// Extracts filenames and song/instrument/sample names from .IT,
+.ITI and .ITS files//
 
 Possible uses:
 
-* Automatically generating lists of Impulse Tracker samples in your library
+* Automatically generating lists of Impulse Tracker modules, instruments and samples in your library
 
 === Makeamiga ===
 
