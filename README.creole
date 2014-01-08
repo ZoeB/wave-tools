@@ -13,9 +13,9 @@ Possible uses:
 
 * Making interesting pitched sounds on the Doepfer A-112
 
-=== Impulse Tracker sample describer (ITSD) ===
+=== Impulse Tracker file lister (itls) ===
 
-// Extracts filenames and sample names from .ITS files//
+// Extracts filenames and song/instrument/sample names from .ITS files//
 
 Possible uses:
 
