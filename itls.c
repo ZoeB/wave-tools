@@ -1,5 +1,7 @@
 /* Impulse Tracker file lister, by Zoe Blade */
 
+/* TODO: If no arguments are supplied, list all files in the present working directory */
+
 #include <stdio.h>
 #include "itls.h"
 
