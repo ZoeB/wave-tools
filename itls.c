@@ -4,33 +4,35 @@
 #include "itls.h"
 
 void describeFile(FILE *inputFilePointer, FILE *outputFilePointer) {
-	/* If the input doesn't begin with "IMP", it's not an Impulse Tracker
-	   file.  Quit. */
+	while (1) {
+		/* If the input doesn't begin with "IMP", it's not a block of
+		   Impulse Tracker data.  Quit. */
 
-	if (getc(inputFilePointer) != 'I')
-		return;
+		if (getc(inputFilePointer) != 'I')
+			return;
 
-	if (getc(inputFilePointer) != 'M')
-		return;
+		if (getc(inputFilePointer) != 'M')
+			return;
 
-	if (getc(inputFilePointer) != 'P')
-		return;
+		if (getc(inputFilePointer) != 'P')
+			return;
 
-	switch (getc(inputFilePointer)) {
-	case 'I': /* Instrument */
-		describeInstrument(inputFilePointer, outputFilePointer);
-		break;
+		switch (getc(inputFilePointer)) {
+		case 'I': /* Instrument */
+			describeInstrument(inputFilePointer, outputFilePointer);
+			break;
 
-	case 'M': /* Module (song) */
-		describeModule(inputFilePointer, outputFilePointer);
-		break;
+		case 'M': /* Module (song) */
+			describeModule(inputFilePointer, outputFilePointer);
+			break;
 
-	case 'S': /* Sample */
-		describeSample(inputFilePointer, outputFilePointer);
-		break;
+		case 'S': /* Sample */
+			describeSample(inputFilePointer, outputFilePointer);
+			break;
 
-	default:
-		return;
+		default:
+			return;
+		}
 	}
 }
 
