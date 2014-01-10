@@ -165,7 +165,7 @@ int main(int argc, char *argv[]) {
 	FILE *filePointer;
 
 	if (argc == 1) {
-		describeFile(stdin, stdout);
+		return 0; /* Only work with named files, not stdin */
 	} else {
 		while (--argc > 0) {
 			filePointer = fopen(*++argv, "r");
