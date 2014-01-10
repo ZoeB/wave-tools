@@ -4,53 +4,34 @@
 #include "itls.h"
 
 void describeFile(FILE *inputFilePointer, FILE *outputFilePointer) {
-	int char1 = '\0';
-	int char2 = '\0';
-	int char3 = '\0';
-	int char4 = '\0';
+	/* If the input doesn't begin with "IMP", it's not an Impulse Tracker
+	   file.  Quit. */
 
-	/*
-	 * Every interesting block starts with the characters "IMP".
-	 *
-	 * Not knowing where they should start means reading everything
-	 * indiscriminately, which is sloppy coding on my part and liable to
-	 * be slow and possibly come up with false positives, but then again
-	 * it's thorough and will allow whole concatenated gobs of Impulse
-	 * Tracker data to be sent to the program even via stdin.  Most
-	 * significantly for me, it means I get to re-use the instrument and
-	 * sample detecting routines from within module and instrument data.
-	 * Nevertheless, I should rewrite this recursion at some point.  For
-	 * one thing, it would be nice if recursed data is indicated with a
-	 * lower case "i" or "s" to differentiate it in the output stream.
-	 */
+	if (getc(inputFilePointer) != 'I')
+		return;
 
-	while (char4 != EOF) {
-		char1 = char2;
-		char2 = char3;
-		char3 = char4;
-		char4 = getc(inputFilePointer);
+	if (getc(inputFilePointer) != 'M')
+		return;
 
-		if (char1 != 'I' || char2 != 'M' || char3 != 'P') {
-			continue;
-		}
+	if (getc(inputFilePointer) != 'P')
+		return;
 
-		switch (char4) {
-		case 'I': /* Instrument */
-			describeInstrument(inputFilePointer, outputFilePointer);
-			break;
+	switch (getc(inputFilePointer)) {
+	case 'I': /* Instrument */
+		describeInstrument(inputFilePointer, outputFilePointer);
+		break;
 
-		case 'M': /* Module (song) */
-			describeModule(inputFilePointer, outputFilePointer);
-			break;
+	case 'M': /* Module (song) */
+		describeModule(inputFilePointer, outputFilePointer);
+		break;
 
-		case 'S': /* Sample */
-			describeSample(inputFilePointer, outputFilePointer);
-			break;
-		}
+	case 'S': /* Sample */
+		describeSample(inputFilePointer, outputFilePointer);
+		break;
 
+	default:
+		return;
 	}
-
-	return;
 }
 
 void describeInstrument(FILE *inputFilePointer, FILE *outputFilePointer) {
