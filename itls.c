@@ -39,7 +39,6 @@ void describeFile(FILE *inputFilePointer, FILE *outputFilePointer) {
 }
 
 void describeInstrument(FILE *inputFilePointer, FILE *outputFilePointer) {
-	/* TODO: name its samples too, one S-line each */
 	int characterNumber;
 	int character;
 
