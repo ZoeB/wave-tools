@@ -108,7 +108,8 @@ void describeModule(FILE *inputFilePointer, FILE *outputFilePointer) {
 	   newline and return. */
 
 	/* TODO: This!  It's trickier for the module header, as it's a
-	   variable length. */
+	   variable length.  ITTECH.TXT suggests the length of the module
+	   header is 00C0h+OrdNum+InsNum*4+SmpNum*4+PatNum*4. */
 
 	putc('\n', outputFilePointer);
 	return;
