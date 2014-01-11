@@ -69,9 +69,9 @@ void describeInstrument(FILE *inputFilePointer, FILE *outputFilePointer) {
 	/* We've finished successfully printing out an instrument's filename
 	   and instrument name.  Skip to the end of the instrument data block,
 	   print a newline and return.  There are 554 bytes per instrument,
-	   minus the 31 we've already read so far, so skip ahead 523 bytes. */
+	   minus the 57 we've already read so far, so skip ahead 497 bytes. */
 
-	fseek(inputFilePointer, 497, SEEK_CUR); /* TODO: Work out why 497 seems to work better than 523.  I reached this number using trial and error, which is not a good sign. */
+	fseek(inputFilePointer, 497, SEEK_CUR);
 	putc('\n', outputFilePointer);
 	return;
 }
@@ -144,10 +144,10 @@ void describeSample(FILE *inputFilePointer, FILE *outputFilePointer) {
 
 	/* We've finished successfully printing out a sample's filename and
 	   sample name.  Skip to the end of the sample data block, print a
-	   newline and return.  There are 80 bytes per sample, minus the 19
-	   we've already read so far, so skip ahead 61 bytes. */
+	   newline and return.  There are 80 bytes per sample, minus the 45
+	   we've already read so far, so skip ahead 35 bytes. */
 
-	fseek(inputFilePointer, 35, SEEK_CUR); /* TODO: Work out why 35 seems to work better than 80.  I reached this number using trial and error, which is not a good sign. */
+	fseek(inputFilePointer, 35, SEEK_CUR);
 	putc('\n', outputFilePointer);
 	return;
 }
