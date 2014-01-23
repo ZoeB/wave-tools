@@ -5,24 +5,22 @@
 char akaiiToAscii(char character) {
 	/* Based on the table at http://web.archive.org/web/20050212062331/http://www.abel.co.uk/~maxim/akai/akaiinfo.htm#4 */
 	if (character < 10) {
-		character += 48; /* 0 - 9 */
+		return character + 48; /* 0 - 9 */
 	} else if (character < 11) {
-		character = ' ';
+		return ' ';
 	} else if (character < 37) {
-		character += 54; /* A - Z */
+		return character + 54; /* A - Z */
 	} else if (character < 38) {
-		character = '#';
+		return '#';
 	} else if (character < 39) {
-		character = '+';
+		return '+';
 	} else if (character < 40) {
-		character = '-';
+		return '-';
 	} else if (character < 41) {
-		character = '.';
+		return '.';
 	} else {
 		return '\0';
 	}
-
-	return character;
 }
 
 void describeFile(FILE *inputFilePointer, FILE *outputFilePointer) {
