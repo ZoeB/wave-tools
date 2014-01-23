@@ -4,6 +4,8 @@
 
 # Converts mono .wav files into mono 8-bit 8363Hz .pcm files
 
+# Note that my sample rate conversion is laughably simplistic.  The Nyquist–Shannon sampling theorem dictates that I should run all samples to be converted through a 4181.5Hz lowpass filter first, with a cutoff that's as close to a sheer vertical drop as possible.  This doesn't do that at all, hence the nasty aliasing effects you get as a result.  Similarly, the bit depth conversion involves ignoring the least significant bits, not rounding off anything.  So this sort of works, but the resulting samples sound terrible.
+
 import math # For floor
 import struct # For converting the (two's complement?) binary data to integers
 import sys # For command line arguments
