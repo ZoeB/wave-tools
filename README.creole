@@ -22,6 +22,14 @@ Possible uses:
 
 * Automatically generating lists of Impulse Tracker modules, instruments and samples in your library
 
+=== Make8bit ===
+
+//Converts 24-bit and 16-bit .wav files into 8-bit .wav files//
+
+Possible uses:
+
+* Importing modern sound recordings into old samplers
+
 === Makeamiga ===
 
 //Converts mono .wav files into mono 8-bit 8363Hz .pcm files//
