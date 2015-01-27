@@ -5,6 +5,7 @@
 # Splits up a big .wav file into several smaller .wav files, one per sound
 
 import glob # For command line wildcards
+import os # For optionally deleting the input files
 import struct # For converting the (two's complement?) binary data to integers
 import sys # For command line arguments
 import wave # For .wav input and output
@@ -12,6 +13,7 @@ import wave # For .wav input and output
 # Set sensible defaults
 threshold = 1024 # This has to be a number between 1 and 32767
 duration = 11025 # Measured in single samples
+delete = False
 inputFilenames = []
 
 # Override the defaults
@@ -46,6 +48,9 @@ for argument in sys.argv:
 		else:
 			print('The duration must be a positive integer')
 			exit()
+	# Replace original files
+	elif (argument == '-d'):
+		delete = True
 
 if (len(inputFilenames) == 0):
 	print("""\
@@ -57,6 +62,8 @@ Options: (may appear before or after arguments)
 		set the cutoff point between signal and noise (default is 1024, any number between 1 and 32767 is valid)
 	--duration=foo
 		require this many consecutive samples below the cutoff point in order to close the output file (default is 11025, a quarter of a second at CD quality)
+	-d
+		delete original files
 	""")
 	exit()
 
@@ -124,4 +131,9 @@ for inputFilename in inputFilenames:
 
 	if (currentlyWriting == True):
 		outputFile.close()
+
+	if (delete == True):
+		print('Deleting', inputFilename)
+		os.unlink(inputFilename)
+
 	print(inputFilename, "finished splitting")
