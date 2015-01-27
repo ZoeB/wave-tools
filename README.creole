@@ -62,6 +62,14 @@ Possible uses:
 
 * Making mono sound files play nicely with modern stereo-only players (eg getting Not Disturbing Mammoth to work properly on the iPhone)
 
+=== Normalise ===
+
+//Makes .wav files as loud as they can be//
+
+Possible uses:
+
+* Automatically normalising all the .wav files sliced by Wavesplit
+
 === Wavesplit ===
 
 //Splits up a big .wav file into several smaller .wav files, one per
