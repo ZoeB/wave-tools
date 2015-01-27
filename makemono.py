@@ -4,12 +4,14 @@
 
 # Converts stereo .wav files into mono .wav files
 
+import os # For renaming the output files over the top of the input files
 import struct # For converting the (two's complement?) binary data to integers
 import sys # For command line arguments
 import wave # For .wav input and output
 
 # Set sensible defaults
 channel = 'both'
+delete = False
 inputFilenames = []
 
 acceptableChannels = ['both', 'left', 'right']
@@ -29,6 +31,9 @@ for argument in sys.argv:
 		else:
 			print(argument[10:], "ain't any channel I ever heard of")
 			exit()
+	# Replace original files
+	elif (argument == '-d'):
+		delete = True
 
 if (len(inputFilenames) == 0):
 	print("""\
@@ -38,6 +43,8 @@ python3 makemono.py [option...] input.wav
 Options: (may appear before or after arguments)
 	--channel=foo
 		set which channel to extract (default is both, other options are left and right)
+	-d
+		replace original files
 	""")
 	exit()
 
@@ -66,12 +73,20 @@ for inputFilename in inputFilenames:
 
 	sampleWidth = inputFile.getsampwidth()
 
-	if (channel == 'both'):
-		print('Extracting both channels of', inputFilename, 'into', outputFilename)
-	elif (channel == 'left'):
-		print('Extracting left channel of', inputFilename, 'into', outputFilename)
-	elif (channel == 'right'):
-		print('Extracting right channel of', inputFilename, 'into', outputFilename)
+	if (delete == True):
+		if (channel == 'both'):
+			print('Extracting both channels of', inputFilename)
+		elif (channel == 'left'):
+			print('Extracting left channel of', inputFilename)
+		elif (channel == 'right'):
+			print('Extracting right channel of', inputFilename)
+	else:
+		if (channel == 'both'):
+			print('Extracting both channels of', inputFilename, 'into', outputFilename)
+		elif (channel == 'left'):
+			print('Extracting left channel of', inputFilename, 'into', outputFilename)
+		elif (channel == 'right'):
+			print('Extracting right channel of', inputFilename, 'into', outputFilename)
 
 	for iteration in range (0, inputFile.getnframes()):
 		datum = inputFile.readframes(1)
@@ -92,4 +107,9 @@ for inputFilename in inputFilenames:
 
 	inputFile.close()
 	outputFile.close()
-	print(inputFilename, "converted to", outputFilename)
+
+	if (delete == True):
+		os.rename(outputFilename, inputFilename)
+		print(inputFilename, "overwritten")
+	else:
+		print(inputFilename, "converted to", outputFilename)
