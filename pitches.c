@@ -1,3 +1,5 @@
+/* Pitch tabulator, for ANSI C, by Zoe Blade, 2015-05-27 */
+
 #include <math.h>
 #include <stdio.h>
 
