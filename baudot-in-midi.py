@@ -45,6 +45,9 @@ for letter in message:
 	elementCount = 0
 
 	for element in elements:
+		if elementCount == 2:
+			lineToPrint += '.'
+
 		if element == True:
 			lineToPrint += 'o'
 
@@ -60,7 +63,7 @@ for letter in message:
 				track.append(midi.NoteOnEvent(tick=0, velocity=100, pitch=midi.C_3))
 
 		else:
-			lineToPrint += '.'
+			lineToPrint += ' '
 
 		elementCount += 1
 
