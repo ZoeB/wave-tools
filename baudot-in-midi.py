@@ -4,7 +4,7 @@
 
 # Converts a specified message to Baudot within a MIDI file, to embed messages in music as rhythmic harmonies
 
-import midi # Installed from https://github.com/vishnubob/python-midi
+import midi # Installed from https://github.com/vishnubob/python-midi
 import sys # For command line arguments
 
 if len(sys.argv) < 2:
