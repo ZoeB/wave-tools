@@ -46,6 +46,12 @@ void describeFile(FILE *inputFilePointer, FILE *outputFilePointer) {
 	printf("Album   : %s\n", album);
 	printf("Year    : %s\n", year);
 	printf("Comment : %s\n", comment);
+
+	if (comment[28] == '\0' && comment[29] != '\0') {
+		/* The tag is ID3v1.1 */
+		printf("Track   : %u\n", comment[29]);
+	}
+
 	printf("Genre   : %s\n\n", genre);
 	return;
 }
