@@ -18,17 +18,7 @@ void describeFile(FILE *inputFilePointer, FILE *outputFilePointer) {
 	/* If the last 128 chars don't begin with "TAG", they're not an
 	   ID3v1 tag.  Quit. */
 
-	if (getc(inputFilePointer) != 'T') {
-		printf("No ID3v1 tag found.\n\n");
-		return;
-	}
-
-	if (getc(inputFilePointer) != 'A') {
-		printf("No ID3v1 tag found.\n\n");
-		return;
-	}
-
-	if (getc(inputFilePointer) != 'G') {
+	if (getc(inputFilePointer) != 'T' || getc(inputFilePointer) != 'A' || getc(inputFilePointer) != 'G') {
 		printf("No ID3v1 tag found.\n\n");
 		return;
 	}
