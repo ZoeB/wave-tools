@@ -8,11 +8,14 @@ int main(int argc, char *argv[]) {
 	float fundamentalFrequency;
 	int octave;
 	int semitone;
+	char semitoneNamesA[] = "CCDDEFFGGAAB";
+	char semitoneNamesB[] = "-#-#--#-#-#-";
 
-	printf("MIDI NT Frequency\n"); /* MIDI decimal; note name; frequency */
+	printf("MIDI Note Frequency\n"); /* MIDI decimal; note name; frequency */
 	for (octave = 0; octave < 8; octave++) {
 		for (semitone = 0; semitone < 12; semitone++) {
-			printf("%4i\n", 24 + (12 * octave) + semitone);
+			printf("%4i ", 24 + (12 * octave) + semitone);
+			printf(" %c%c%i\n", semitoneNamesA[semitone], semitoneNamesB[semitone], octave);
 		}
 	}
 
