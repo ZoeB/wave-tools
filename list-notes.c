@@ -9,10 +9,10 @@ int main(int argc, char *argv[]) {
 	int octave;
 	int semitone;
 
-	printf("MD MH NT Frequency\n"); /* MIDI decimal; MIDI hexadecimal; note name; frequency */
+	printf("MIDI NT Frequency\n"); /* MIDI decimal; note name; frequency */
 	for (octave = 0; octave < 8; octave++) {
 		for (semitone = 0; semitone < 12; semitone++) {
-			printf("%i\n", 24 + (12 * octave) + semitone);
+			printf("%4i\n", 24 + (12 * octave) + semitone);
 		}
 	}
 
