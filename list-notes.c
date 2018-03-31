@@ -7,18 +7,13 @@
 int main(int argc, char *argv[]) {
 	float fundamentalFrequency;
 	int octave;
+	int semitone;
 
-	printf("Fundamental frequency? ");
-	scanf("%f", &fundamentalFrequency);
-
-	for (octave = 1; octave < 3; octave++) {
-		printf("\n%9.3f\n", (fundamentalFrequency / 1 * octave));
-		printf("%9.3f\n", (fundamentalFrequency / 1 * octave) / 8 * 9);
-		printf("%9.3f\n", (fundamentalFrequency / 1 * octave) / 4 * 5);
-		printf("%9.3f\n", (fundamentalFrequency / 1 * octave) / 3 * 4);
-		printf("%9.3f\n", (fundamentalFrequency / 1 * octave) / 2 * 3);
-		printf("%9.3f\n", (fundamentalFrequency / 1 * octave) / 3 * 5);
-		printf("%9.3f\n", (fundamentalFrequency / 1 * octave) / 8 * 15);
+	printf("MD MH NT Frequency\n"); /* MIDI decimal; MIDI hexadecimal; note name; frequency */
+	for (octave = 0; octave < 8; octave++) {
+		for (semitone = 0; semitone < 12; semitone++) {
+			printf("%i\n", 24 + (12 * octave) + semitone);
+		}
 	}
 
 	return 0;
