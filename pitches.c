@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 		octave = (pitch + 8) / 12;
 		modulo = (pitch + 8) % 12;
 		frequency = pow(2, (pitch - 49) / 12.0) * 440;
-		printf("%7 d\t%c%c%d\t%8.3f\n", pitch + 20, noteLetter[modulo], noteIntonation[modulo], octave, frequency);
+		printf("%7 d\t%c%c%d\t%8.2f\n", pitch + 20, noteLetter[modulo], noteIntonation[modulo], octave, frequency);
 	}
 
 	return 0;
