@@ -1,5 +1,19 @@
 /* Pitch tabulator, for ANSI C, by Zoe Blade, 2015, 2018 */
 
+/*
+
+A4 = 440 Hz is dictated by ISO 16, a popular standard.
+
+C4 = 60 is dictated by the MIDI specification.
+
+While 1V/Oct is a standard, with C being 0V, there's no real consensus
+on *which* C is 0V.  See
+https://learningmodular.com/matching-octaves-in-your-modular/ for
+various competing examples.  You may need to add or subtract one or
+more volts from those shown in this table.
+
+ */
+
 #include <math.h>
 #include <stdio.h>
 
