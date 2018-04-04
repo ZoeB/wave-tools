@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	printf("Name\tMIDI #\tVoltage\tHz\n");
 	printf("=======\t=======\t=======\t========\n\n");
 
-	for (pitch = 1; pitch < 89; pitch++) {
+	for (pitch = 4; pitch < 89; pitch++) {
 		octave = (pitch + 8) / 12;
 		modulo = (pitch + 8) % 12;
 		voltage = octave - 2 + modulo / 12.0;
