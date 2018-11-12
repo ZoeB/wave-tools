@@ -1,4 +1,6 @@
-# FSK-decode
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
+# # FSK-decode
 # For Python 3
 # By Zoe Blade
 
@@ -11,7 +13,7 @@ import wave # For .wav input and output
 # Set sensible defaults
 amplitudeThreshold = 1024 # This has to be a number between 1 and 32767
 frequencyThreshold = 1600 # This should be a number between 1 and the waveform's sample rate
-baudRate = 300 # This should be a number between 1 and the waveform's sample rate
+baudRate = 300 # This should be the desired data rate of the (A)FSK signal
 endianness = "big" # This should be either "big" or "little"
 inputFilenames = []
 
