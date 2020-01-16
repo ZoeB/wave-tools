@@ -54,8 +54,8 @@ void semitonesToBeatsPerMinute(int beatsPerMinute) {
 int main(int argc, char *argv[]) {
 	int beatsPerMinute;
 
-	printf("BPM\tSemitones\tBPM\n");
-	printf("===\t=========\t===\n\n");
+	printf("BPM\tSemitones\t    BPM\n");
+	printf("===\t=========\t=======\n\n");
 
 	if (argc == 1) {
 		for (beatsPerMinute = 80; beatsPerMinute < 145; beatsPerMinute += 5) {
