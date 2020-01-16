@@ -1,9 +1,9 @@
-/* BPM to MS converter, for ANSI C, by Zoe Blade, 2015-12-06 */
+/* Semitone to BPM converter, for ANSI C, by Zoe Blade, 2020-01-16 */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void beatsPerMinuteToMilliseconds(int beatsPerMinute) {
+void semitonesToBeatsPerMinute(int beatsPerMinute) {
 	float millisecondsPerBeat;
 	int sixteenths;
 
@@ -29,10 +29,10 @@ int main(int argc, char *argv[]) {
 
 	if (argc == 1) {
 		for (beatsPerMinute = 80; beatsPerMinute < 145; beatsPerMinute += 5) {
-			beatsPerMinuteToMilliseconds(beatsPerMinute);
+			semitonesToBeatsPerMinute(beatsPerMinute);
 		}
 	} else {
-		beatsPerMinuteToMilliseconds(atoi(argv[1]));
+		semitonesToBeatsPerMinute(atoi(argv[1]));
 	}
 
 	return 0;
