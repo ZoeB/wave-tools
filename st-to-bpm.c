@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define SEMITONE 1.059463 /* 2^(1/12), as there are 12 equally
+                             logarithmically spaced semitones
+                             in an octave */
+
 void semitonesToBeatsPerMinute(int beatsPerMinute) {
 	int semitones;
 	float shiftedBeatsPerMinute;
@@ -13,7 +17,17 @@ void semitonesToBeatsPerMinute(int beatsPerMinute) {
 	 */
 
 	for (semitones = -2; semitones < 3; semitones++) {
-		shiftedBeatsPerMinute = beatsPerMinute;
+		if (semitones > 0) {
+			/* Going up */
+			shiftedBeatsPerMinute = beatsPerMinute * (semitones * SEMITONE);
+		} else if (semitones == 0) {
+			/* Staying still */
+			shiftedBeatsPerMinute = beatsPerMinute;
+		} else {
+			/* Going down */
+			shiftedBeatsPerMinute = beatsPerMinute / ((semitones * -1) * SEMITONE);
+		}
+
 		printf("%3d\t       %+1d\t%7.3f\n", beatsPerMinute, semitones, shiftedBeatsPerMinute);
 	}
 
