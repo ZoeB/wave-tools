@@ -8,21 +8,32 @@
                              in an octave */
 
 float semitoneToBeatsPerMinute(int beatsPerMinute, int semitones) {
+	float shiftedBeatsPerMinute;
 
-	/*
-	 * MS per beat = 60 seconds / BPM * 1000 MS in a second
-	 *             = 60000 MS per minute / BPM
-	 */
+	shiftedBeatsPerMinute = beatsPerMinute;
 
 	if (semitones > 0) {
 		/* Going up */
-		return beatsPerMinute * (semitones * SEMITONE);
+
+		while (semitones > 0) {
+			shiftedBeatsPerMinute *= SEMITONE;
+			semitones--;
+		}
+
+		return shiftedBeatsPerMinute;
 	} else if (semitones == 0) {
 		/* Staying still */
-		return beatsPerMinute;
+		return shiftedBeatsPerMinute;
 	} else {
 		/* Going down */
-		return beatsPerMinute / ((semitones * -1) * SEMITONE);
+		semitones *= -1; /* Make semitones a positive equivalent number */
+
+		while (semitones > 0) {
+			shiftedBeatsPerMinute /= SEMITONE;
+			semitones--;
+		}
+
+		return shiftedBeatsPerMinute;
 	}
 
 	return 0.0;
