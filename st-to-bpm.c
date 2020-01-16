@@ -43,7 +43,7 @@ void semitonesToBeatsPerMinute(int beatsPerMinute) {
 	int semitones;
 	float shiftedBeatsPerMinute;
 
-	for (semitones = -2; semitones < 3; semitones++) {
+	for (semitones = -5; semitones < 6; semitones++) {
 		shiftedBeatsPerMinute = semitoneToBeatsPerMinute(beatsPerMinute, semitones);
 		printf("%3d\t       %+1d\t%7.3f\n", beatsPerMinute, semitones, shiftedBeatsPerMinute);
 	}
