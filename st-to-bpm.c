@@ -4,18 +4,17 @@
 #include <stdlib.h>
 
 void semitonesToBeatsPerMinute(int beatsPerMinute) {
-	float millisecondsPerBeat;
-	int sixteenths;
+	int semitones;
+	float shiftedBeatsPerMinute;
 
 	/*
 	 * MS per beat = 60 seconds / BPM * 1000 MS in a second
 	 *             = 60000 MS per minute / BPM
 	 */
 
-	millisecondsPerBeat = 60000.0 / beatsPerMinute;
-
-	for (sixteenths = 1; sixteenths < 17; sixteenths++) {
-		printf("%3d\t   %2d\t%7.2f\n", beatsPerMinute, sixteenths, millisecondsPerBeat / 4 * sixteenths);
+	for (semitones = -2; semitones < 3; semitones++) {
+		shiftedBeatsPerMinute = beatsPerMinute;
+		printf("%3d\t       %+1d\t%7.3f\n", beatsPerMinute, semitones, shiftedBeatsPerMinute);
 	}
 
 	return;
@@ -24,8 +23,8 @@ void semitonesToBeatsPerMinute(int beatsPerMinute) {
 int main(int argc, char *argv[]) {
 	int beatsPerMinute;
 
-	printf("BPM\t16ths\tMS\n");
-	printf("===\t=====\t=======\n\n");
+	printf("BPM\tSemitones\tBPM\n");
+	printf("===\t=========\t===\n\n");
 
 	if (argc == 1) {
 		for (beatsPerMinute = 80; beatsPerMinute < 145; beatsPerMinute += 5) {
