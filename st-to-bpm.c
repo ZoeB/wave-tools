@@ -7,27 +7,33 @@
                              logarithmically spaced semitones
                              in an octave */
 
-void semitonesToBeatsPerMinute(int beatsPerMinute) {
-	int semitones;
-	float shiftedBeatsPerMinute;
+float semitoneToBeatsPerMinute(int beatsPerMinute, int semitones) {
 
 	/*
 	 * MS per beat = 60 seconds / BPM * 1000 MS in a second
 	 *             = 60000 MS per minute / BPM
 	 */
 
-	for (semitones = -2; semitones < 3; semitones++) {
-		if (semitones > 0) {
-			/* Going up */
-			shiftedBeatsPerMinute = beatsPerMinute * (semitones * SEMITONE);
-		} else if (semitones == 0) {
-			/* Staying still */
-			shiftedBeatsPerMinute = beatsPerMinute;
-		} else {
-			/* Going down */
-			shiftedBeatsPerMinute = beatsPerMinute / ((semitones * -1) * SEMITONE);
-		}
+	if (semitones > 0) {
+		/* Going up */
+		return beatsPerMinute * (semitones * SEMITONE);
+	} else if (semitones == 0) {
+		/* Staying still */
+		return beatsPerMinute;
+	} else {
+		/* Going down */
+		return beatsPerMinute / ((semitones * -1) * SEMITONE);
+	}
 
+	return 0.0;
+}
+
+void semitonesToBeatsPerMinute(int beatsPerMinute) {
+	int semitones;
+	float shiftedBeatsPerMinute;
+
+	for (semitones = -2; semitones < 3; semitones++) {
+		shiftedBeatsPerMinute = semitoneToBeatsPerMinute(beatsPerMinute, semitones);
 		printf("%3d\t       %+1d\t%7.3f\n", beatsPerMinute, semitones, shiftedBeatsPerMinute);
 	}
 
