@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 	printf("Name\tHz\tBPM\n");
 	printf("========\t=======\t========\n\n");
 
-	for (pitch = -56; pitch < -32; pitch++) {
+	for (pitch = -56; pitch < -31; pitch++) {
 		octave = (pitch + 8) / 12;
 		modulo = (pitch + 8 + 60) % 12; /* Add 60 just to get it in the positive range, to calculate the modulo */
 		frequency = pow(2, (pitch - 49) / 12.0) * 440;
