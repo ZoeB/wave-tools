@@ -1,5 +1,5 @@
-/* BPM as pitch tabulator, to tune tempos, for ANSI C, by ZB, 2020 */
-/* Based on pitch tabulator, for ANSI C, by Zoe Blade, 2015, 2018 */
+/* BPM semitone shifter, to proportionally change tempo and key, for ANSI C, by ZB, 2022 */
+/* Based on BPM as pitch tabulator, to tune tempos, for ANSI C, by ZB, 2020 */
 
 #include <math.h>
 #include <stdio.h>
