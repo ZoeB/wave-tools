@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	printf("==============\t=======\n\n");
 
 	for (semitone = -5; semitone <= 5; semitone++) {
-		newTempo = pow(2, (semitone - 49) / 12.0) * 440;
+		newTempo = pow(2, semitone / 12.0) * tempo;
 		printf("            %+i\t%7.3f\n", semitone, newTempo);
 	}
 
