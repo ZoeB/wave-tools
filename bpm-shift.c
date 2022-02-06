@@ -16,12 +16,12 @@ int main(int argc, char *argv[]) {
 	}
 
 	tempo = atof(argv[1]);
-	printf("Semitone shift\t\tBPM\n");
-	printf("========\t=======\t========\n\n");
+	printf("Semitone shift\tBPM\n");
+	printf("==============\t=======\n\n");
 
 	for (semitone = -5; semitone <= 5; semitone++) {
 		newTempo = pow(2, (semitone - 49) / 12.0) * 440;
-		printf("%i\t%5.3f\n", semitone, newTempo);
+		printf("            %+i\t%7.3f\n", semitone, newTempo);
 	}
 
 	return 0;
