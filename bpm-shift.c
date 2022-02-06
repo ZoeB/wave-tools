@@ -3,25 +3,25 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-	int pitch;
-	int modulo;
-	char noteLetter[12] = "CCDDEFFGGAAB";
-	char noteIntonation[12] = "-#-#--#-#-#-";
-	int octave;
-	float frequency;
+	int semitone;
 	float tempo;
+	float newTempo;
 
-	printf("Name\tHz\tBPM\n");
+	if (argc != 2) {
+		printf("Please specify a tempo\n");
+		return 1;
+	}
+
+	tempo = atof(argv[1]);
+	printf("Semitone shift\t\tBPM\n");
 	printf("========\t=======\t========\n\n");
 
-	for (pitch = -56; pitch < -31; pitch++) {
-		octave = (pitch + 8) / 12;
-		modulo = (pitch + 8 + 60) % 12; /* Add 60 just to get it in the positive range, to calculate the modulo */
-		frequency = pow(2, (pitch - 49) / 12.0) * 440;
-		tempo = frequency * 60;
-		printf("%c%c%d\t%5.3f\t%8.3f\n", noteLetter[modulo], noteIntonation[modulo], octave, frequency, tempo);
+	for (semitone = -5; semitone <= 5; semitone++) {
+		newTempo = pow(2, (semitone - 49) / 12.0) * 440;
+		printf("%i\t%5.3f\n", semitone, newTempo);
 	}
 
 	return 0;
