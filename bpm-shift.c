@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	tempo = atof(argv[1]);
-	printf("Semitone shift\tBPM\n");
+	printf("Semitone shift\tNew BPM\n");
 	printf("==============\t=======\n\n");
 
 	for (semitone = -5; semitone <= 5; semitone++) {
