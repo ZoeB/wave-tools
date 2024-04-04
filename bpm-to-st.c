@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 void beatsPerMinuteToSemitones(int beatsPerMinute) {
 	float millisecondsPerBeat;
@@ -14,7 +15,7 @@ void beatsPerMinuteToSemitones(int beatsPerMinute) {
 	millisecondsPerBeat = 60000.0 / beatsPerMinute;
 
 	for (semitones = -2; semitones < 3; semitones++) {
-		printf("%3d\t   %2d\t%7.2f\n", beatsPerMinute, semitones, beatsPerMinute * 2 ^^ (semitones / 12));
+		printf("%3d\t   %2d\t%7.2f\n", beatsPerMinute, semitones, beatsPerMinute * pow(2, semitones / 12));
 	}
 
 	return;
