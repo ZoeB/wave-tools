@@ -9,7 +9,7 @@ void beatsPerMinuteToSemitones(int beatsPerMinute) {
 	int semitones;
 
 	/*
-	 * The old tempo * 2 ^^ (the pitch change in semitones / 12) = the new tempo
+	 * The old tempo * 2 ^ (the pitch change in semitones / 12) = the new tempo
 	 */
 
 	millisecondsPerBeat = 60000.0 / beatsPerMinute;
