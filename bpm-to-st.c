@@ -14,7 +14,7 @@ void beatsPerMinuteToSemitones(int beatsPerMinute) {
 	millisecondsPerBeat = 60000.0 / beatsPerMinute;
 
 	for (semitones = -2; semitones < 3; semitones++) {
-		printf("%3d\t   %2d\t%7.2f\n", beatsPerMinute, semitones, millisecondsPerBeat / 4 * sixteenths);
+		printf("%3d\t   %2d\t%7.2f\n", beatsPerMinute, semitones, beatsPerMinute * 2 ^^ (semitones / 12));
 	}
 
 	return;
