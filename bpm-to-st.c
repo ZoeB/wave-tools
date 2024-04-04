@@ -5,17 +5,16 @@
 
 void beatsPerMinuteToSemitones(int beatsPerMinute) {
 	float millisecondsPerBeat;
-	int sixteenths;
+	int semitones;
 
 	/*
-	 * MS per beat = 60 seconds / BPM * 1000 MS in a second
-	 *             = 60000 MS per minute / BPM
+	 * The old tempo * 2 ^^ (the pitch change in semitones / 12) = the new tempo
 	 */
 
 	millisecondsPerBeat = 60000.0 / beatsPerMinute;
 
-	for (sixteenths = 1; sixteenths < 17; sixteenths++) {
-		printf("%3d\t   %2d\t%7.2f\n", beatsPerMinute, sixteenths, millisecondsPerBeat / 4 * sixteenths);
+	for (semitones = -2; semitones < 3; semitones++) {
+		printf("%3d\t   %2d\t%7.2f\n", beatsPerMinute, semitones, millisecondsPerBeat / 4 * sixteenths);
 	}
 
 	return;
